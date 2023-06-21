@@ -12,6 +12,7 @@ function Player({ source }: Props) {
 
   const [track, setTrack] = useAtom(trackAtom)
   const audioRef = useRef<HTMLAudioElement>(null)
+  const timeAdjustmentSliderRef = useRef<HTMLInputElement>(null)
 
   function playAudio() {
     if (audioRef.current) {
@@ -57,6 +58,32 @@ function Player({ source }: Props) {
       setTrack((prev) => {
         return { ...prev, currentTime }
       })
+
+      if (timeAdjustmentSliderRef.current) {
+        timeAdjustmentSliderRef.current.value = String(currentTime)
+      }
+    }
+  }
+
+  function handleAdjustAudioVolume(e) {
+    const input = e.target as HTMLInputElement
+    const currentVolume = Number(input.value)
+
+    if (audioRef.current) {
+      audioRef.current.volume = currentVolume
+
+      setTrack((prev) => {
+        return { ...prev, currentVolume }
+      })
+    }
+  }
+
+  function handleAdjustAudioCurrentTime(e) {
+    const input = e.target as HTMLInputElement
+    const currentSliderTime = Number(input.value)
+
+    if (audioRef.current) {
+      audioRef.current.currentTime = currentSliderTime
     }
   }
 
@@ -80,24 +107,39 @@ function Player({ source }: Props) {
         <h1>autor</h1>
         <span>musica nome</span>
       </div>
-      <div className="flex-auto border-[1px] flex items-center justify-center">
-        <button>
-          <FiChevronLeft size={30} />
-        </button>
-        <div>
-          {track?.isPlaying ? (
-            <button onClick={pauseAudio}>
-              <FiPause size={30} />
+      <div className="flex-auto border-[1px] flex flex-col items-center justify-center">
+        <div className="w-full h-1/2 flex items-center justify-center border-2">
+          <button>
+            <FiChevronLeft size={30} />
+          </button>
+          <div>
+            {track?.isPlaying ? (
+              <button onClick={pauseAudio}>
+                <FiPause size={30} />
+              </button>
+            ) : (
+              <button onClick={playAudio}>
+                <FiPlay size={30} />
+              </button>
+            )}
+            <button>
+              <FiChevronRight size={30} />
             </button>
-          ) : (
-            <button onClick={playAudio}>
-              <FiPlay size={30} />
-            </button>
-          )}
+          </div>
         </div>
-        <button>
-          <FiChevronRight size={30} />
-        </button>
+        <div className="w-full h-1/2 flex items-center justify-center border-2">
+          <input
+            ref={timeAdjustmentSliderRef}
+            type="range"
+            min="0"
+            max={track?.duration}
+            step="0.1"
+            onChange={handleAdjustAudioCurrentTime}
+          />
+        </div>
+      </div>
+      <div className="w-[22.15%] h-full border-[1px] flex flex-col justify-center items-center gap-y-3">
+        <input type="range" min="0" max="1" step="0.01" onChange={handleAdjustAudioVolume} />
       </div>
     </div>
   )
