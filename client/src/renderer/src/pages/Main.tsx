@@ -47,10 +47,10 @@ export default function Main() {
   }
 
   return (
-    <main className="w-screen h-screen bg-neutral-950 text-neutral-300">
-      <div className="w-full h-[9%] border-[0.1rem] border-zinc-900"></div>
-      <div className="w-full h-[76%] border-[0.1rem] border-zinc-900 flex">
-        <div className="w-[23%] h-full border-[0.1rem] border-zinc-900">
+    <main className="w-screen h-screen bg-zinc-950 text-neutral-300">
+      <div className="w-full h-[9%]"></div>
+      <div className="w-full h-[76%] flex">
+        <div className="w-[23%] h-full border-r-[1px] border-r-neutral-900">
           <Padding>
             <h1 className="text-white">
               <RiHomeLine />
@@ -58,21 +58,21 @@ export default function Main() {
             </h1>
           </Padding>
         </div>
-        <div className="w-[78%] h-full border-[0.1rem] border-zinc-900">
+        <div className="w-[78%] h-full">
           {isLoading ? (
             <h1>Loading</h1>
           ) : isError ? (
             <h1>Try again</h1>
           ) : (
-            <div className="py-2 space-y-3">
-              {localSongs?.map((song) => (
-                <SongItem key={song.id} song={song} atClick={updateCurrentTrack} />
+            <div className="w-full h-full py-2 space-y-3 overflow-y-auto">
+              {localSongs?.map((song, index) => (
+                <SongItem index={index} key={song.id} song={song} atClick={updateCurrentTrack} />
               ))}
             </div>
           )}
         </div>
       </div>
-      <div className="w-full h-[15%] border-[0.1rem] border-zinc-900">
+      <div className="w-full h-[15%] border-t-[0.1rem] border-t-neutral-800 bg bg-zinc-900">
         <Player
           goToNextSong={goToNextSong}
           goToPreviousSong={goToPreviousSong}

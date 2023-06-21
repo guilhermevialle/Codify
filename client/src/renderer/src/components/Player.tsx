@@ -1,7 +1,15 @@
 import { useAtom } from 'jotai/react'
 import { trackAtom } from '@renderer/contexts/trackAtom'
 import { useRef, useEffect, memo } from 'react'
-import { FiPlay, FiPause, FiChevronLeft, FiChevronRight, FiRepeat } from 'react-icons/fi'
+import {
+  MdPlayCircle,
+  MdSkipPrevious,
+  MdSkipNext,
+  MdPauseCircleFilled,
+  MdRepeat
+} from 'react-icons/md'
+import { separateTitleAndAuthor } from '@renderer/utils/separateTitleAndAuthor'
+import { formatTime } from '@renderer/utils/formatTime'
 
 type Props = {
   goToNextSong: () => void
@@ -106,6 +114,8 @@ function Player({ source, goToNextSong, goToPreviousSong }: Props) {
     console.log(track)
   }, [track])
 
+  const buttonVariant = 'text-zinc-400 hover:text-white transition-all'
+
   return (
     <div className="w-full h-full flex">
       <audio
@@ -119,46 +129,69 @@ function Player({ source, goToNextSong, goToPreviousSong }: Props) {
         loop={track?.isLooping}
         autoPlay
       ></audio>
-      <div className="w-[22.15%] h-full flex flex-col justify-center items-center gap-y-3">
-        <h1>autor</h1>
-        <span>musica nome</span>
+      <div className="w-[22.15%] h-[100%] flex flex-col justify-center items-center gap-y-3 p-3">
+        <h1 className="w-full font-semibold truncate">
+          {track?.metadata && separateTitleAndAuthor(track?.metadata?.title).title}
+        </h1>
+        <span className="w-full text-sm font-medium text-zinc-400 truncate">
+          {(track?.metadata && separateTitleAndAuthor(track?.metadata?.title).author) || 'Unknow'}
+        </span>
       </div>
       <div className="flex-auto flex flex-col items-center justify-center">
-        <div className="w-full h-1/2 flex items-center justify-center border-2">
-          <button onClick={goToPreviousSong}>
-            <FiChevronLeft size={30} />
-          </button>
-          <div>
+        <div className="w-full h-[60%]">
+          <div className="w-full h-full flex items-center justify-center gap-x-4">
+            <button className={buttonVariant} onClick={goToPreviousSong}>
+              <MdSkipPrevious size={30} />
+            </button>
             {track?.isPlaying ? (
-              <button onClick={pauseAudio}>
-                <FiPause size={30} />
+              <button className={buttonVariant} onClick={pauseAudio}>
+                <MdPauseCircleFilled size={44} />
               </button>
             ) : (
-              <button onClick={playAudio}>
-                <FiPlay size={30} />
+              <button className={buttonVariant} onClick={playAudio}>
+                <MdPlayCircle size={44} />
               </button>
             )}
-            <button onClick={goToNextSong}>
-              <FiChevronRight size={30} />
+            <button className={buttonVariant} onClick={goToNextSong}>
+              <MdSkipNext size={30} />
             </button>
-            <button onClick={handleAudioLoop}>
-              <FiRepeat size={24} />
+            <button className={buttonVariant} onClick={handleAudioLoop}>
+              <MdRepeat size={24} />
             </button>
           </div>
         </div>
-        <div className="w-full h-1/2 flex items-center justify-center">
-          <input
-            ref={timeAdjustmentSliderRef}
-            type="range"
-            min="0"
-            max={track?.duration}
-            step="0.1"
-            onChange={handleAdjustAudioCurrentTime}
-          />
+        <div className="w-full h-[40%] ">
+          <div className="w-full h-full flex flex-col items-center justify-center">
+            <input
+              id="timeAdjustmentSlider"
+              className="w-[80%] h-[2px]"
+              ref={timeAdjustmentSliderRef}
+              type="range"
+              min="0"
+              max={track?.duration}
+              step="0.1"
+              onChange={handleAdjustAudioCurrentTime}
+            />
+            <div className="w-[80%] flex justify-between">
+              <span className="text-[11px] text-neutral-400">
+                {track?.currentTime && formatTime(track.currentTime)}
+              </span>
+              <span className="text-[11px] text-neutral-400">
+                {track?.duration && formatTime(track.duration)}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
       <div className="w-[22.15%] h-full flex flex-col justify-center items-center gap-y-3">
-        <input type="range" min="0" max="1" step="0.01" onChange={handleAdjustAudioVolume} />
+        <input
+          className="w-[50%] h-[2px]"
+          type="range"
+          min="0"
+          max="1"
+          step="0.01"
+          onChange={handleAdjustAudioVolume}
+        />
       </div>
     </div>
   )

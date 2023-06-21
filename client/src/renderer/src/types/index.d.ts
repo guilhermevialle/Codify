@@ -6,6 +6,7 @@ export type Song = {
 }
 
 export type Track = {
+  metadata?: Song
   isPlaying?: boolean
   duration?: number
   currentTime?: number

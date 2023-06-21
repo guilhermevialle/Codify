@@ -21,6 +21,7 @@ let songs: Song[] | undefined = []
 
 getAllSongs().then((res) => {
   songs = res
+  console.log(songs)
   return
 })
 

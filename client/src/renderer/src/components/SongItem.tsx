@@ -1,5 +1,5 @@
 import { Song } from '@renderer/types'
-import { useState } from 'react'
+import { useState, useEffect, memo } from 'react'
 import { FiPlay } from 'react-icons/fi'
 import AudioAnimation from './AudioAnimation'
 import { useAtom } from 'jotai'
@@ -8,15 +8,26 @@ import { baseURL } from '@renderer/services/api'
 
 type Props = {
   song: Song | undefined
+  index: number
   atClick: (id: number) => void
 }
 
-export default function SongItem({ song, atClick }: Props) {
+function SongItem({ song, index, atClick }: Props) {
   if (!song) return null
 
-  const [track] = useAtom(trackAtom)
+  const [track, setTrack] = useAtom(trackAtom)
   const [hovering, setHover] = useState<boolean>(false)
   const [click, setClick] = useState<boolean>(false)
+
+  const theTrackThatIsPlaying = !track?.isEnded && track?.source == `${baseURL}/song/${song.id}`
+
+  useEffect(() => {
+    if (theTrackThatIsPlaying) {
+      setTrack((prev) => {
+        return { ...prev, metadata: song }
+      })
+    }
+  }, [track?.source])
 
   return (
     <div
@@ -31,14 +42,21 @@ export default function SongItem({ song, atClick }: Props) {
       <span className="w-[10%] flex justify-center">
         {hovering ? (
           <FiPlay size={16} />
-        ) : !track?.isEnded && track?.source == `${baseURL}/song/${song.id}` ? (
+        ) : theTrackThatIsPlaying ? (
           <AudioAnimation />
         ) : (
           <span className="text-[0.8rem]">{song.id + 1 + '.'}</span>
         )}
       </span>
-      <h1 className="w-[65%] truncate font-semibold">{song.title}</h1>
-      <span className="w-[20%] flex justify-center text-[0.8rem]">{song.lastModified}</span>
+      <h1
+        className={`w-[65%] truncate font-semibold ${theTrackThatIsPlaying ? 'text-blue-500' : ''}`}
+      >
+        {song.title}
+        <span className="w-[20%] flex justify-center text-[12px]">{song.lastModified}</span>
+      </h1>
+      <span className="w-[20%] flex justify-center text-[0.8rem]"></span>
     </div>
   )
 }
+
+export default memo(SongItem)
