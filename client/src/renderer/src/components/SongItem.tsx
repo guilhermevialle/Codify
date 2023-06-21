@@ -29,9 +29,9 @@ export default function SongItem({ song, atClick }: Props) {
       onMouseLeave={() => setHover(false)}
     >
       <span className="w-[10%] flex justify-center">
-        {hovering && !click ? (
+        {hovering ? (
           <FiPlay size={16} />
-        ) : click && !track?.isEnded && track?.source == `${baseURL}/song/${song.id}` ? (
+        ) : !track?.isEnded && track?.source == `${baseURL}/song/${song.id}` ? (
           <AudioAnimation />
         ) : (
           <span className="text-[0.8rem]">{song.id + 1 + '.'}</span>

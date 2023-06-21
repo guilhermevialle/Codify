@@ -4,10 +4,12 @@ import { useRef, useEffect, memo } from 'react'
 import { FiPlay, FiPause, FiChevronLeft, FiChevronRight, FiRepeat } from 'react-icons/fi'
 
 type Props = {
+  goToNextSong: () => void
+  goToPreviousSong: () => void
   source: string | undefined
 }
 
-function Player({ source }: Props) {
+function Player({ source, goToNextSong, goToPreviousSong }: Props) {
   if (!source) return null
 
   const [track, setTrack] = useAtom(trackAtom)
@@ -122,8 +124,8 @@ function Player({ source }: Props) {
         <span>musica nome</span>
       </div>
       <div className="flex-auto flex flex-col items-center justify-center">
-        <div className="w-full h-1/2 flex items-center justify-center">
-          <button>
+        <div className="w-full h-1/2 flex items-center justify-center border-2">
+          <button onClick={goToPreviousSong}>
             <FiChevronLeft size={30} />
           </button>
           <div>
@@ -136,7 +138,7 @@ function Player({ source }: Props) {
                 <FiPlay size={30} />
               </button>
             )}
-            <button>
+            <button onClick={goToNextSong}>
               <FiChevronRight size={30} />
             </button>
             <button onClick={handleAudioLoop}>
