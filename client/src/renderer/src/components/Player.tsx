@@ -1,7 +1,7 @@
 import { useAtom } from 'jotai/react'
 import { trackAtom } from '@renderer/contexts/trackAtom'
 import { useRef, useEffect, memo } from 'react'
-import { FiPlay, FiPause, FiChevronLeft, FiChevronRight } from 'react-icons/fi'
+import { FiPlay, FiPause, FiChevronLeft, FiChevronRight, FiRepeat } from 'react-icons/fi'
 
 type Props = {
   source: string | undefined
@@ -87,28 +87,42 @@ function Player({ source }: Props) {
     }
   }
 
+  function handleAudioLoop(e) {
+    if (audioRef.current) {
+      let isLooping
+
+      if (track?.isLooping) isLooping = false
+      else isLooping = true
+
+      setTrack((prev) => {
+        return { ...prev, isLooping }
+      })
+    }
+  }
+
   useEffect(() => {
     console.log(track)
   }, [track])
 
   return (
-    <div className="w-full border-[1px] h-full flex">
+    <div className="w-full h-full flex">
       <audio
         ref={audioRef}
-        onTimeUpdate={() => observeAudioVariables()}
+        onTimeUpdate={observeAudioVariables}
         onLoadedMetadata={handleAudioLoaded}
         onPlay={handleAudioPlaying}
         onPause={handleAudioPlaying}
         onEnded={handleAudioEnded}
         src={source}
+        loop={track?.isLooping}
         autoPlay
       ></audio>
-      <div className="w-[22.15%] h-full border-[1px] flex flex-col justify-center items-center gap-y-3">
+      <div className="w-[22.15%] h-full flex flex-col justify-center items-center gap-y-3">
         <h1>autor</h1>
         <span>musica nome</span>
       </div>
-      <div className="flex-auto border-[1px] flex flex-col items-center justify-center">
-        <div className="w-full h-1/2 flex items-center justify-center border-2">
+      <div className="flex-auto flex flex-col items-center justify-center">
+        <div className="w-full h-1/2 flex items-center justify-center">
           <button>
             <FiChevronLeft size={30} />
           </button>
@@ -125,9 +139,12 @@ function Player({ source }: Props) {
             <button>
               <FiChevronRight size={30} />
             </button>
+            <button onClick={handleAudioLoop}>
+              <FiRepeat size={24} />
+            </button>
           </div>
         </div>
-        <div className="w-full h-1/2 flex items-center justify-center border-2">
+        <div className="w-full h-1/2 flex items-center justify-center">
           <input
             ref={timeAdjustmentSliderRef}
             type="range"
@@ -138,7 +155,7 @@ function Player({ source }: Props) {
           />
         </div>
       </div>
-      <div className="w-[22.15%] h-full border-[1px] flex flex-col justify-center items-center gap-y-3">
+      <div className="w-[22.15%] h-full flex flex-col justify-center items-center gap-y-3">
         <input type="range" min="0" max="1" step="0.01" onChange={handleAdjustAudioVolume} />
       </div>
     </div>
