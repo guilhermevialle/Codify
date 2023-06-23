@@ -1,4 +1,3 @@
-import Background from '@renderer/components/Background'
 import Padding from '@renderer/components/Ident/Padding'
 import Dropdown from '@renderer/components/Lib/Dropdowns/Dropdown'
 import Player from '@renderer/components/Player'
@@ -33,6 +32,7 @@ export default function Main() {
         const nextTrackSource = `${baseURL}/song/${Number(id) + 1}`
         return nextTrackSource
       }
+      return prev
     })
   }
 
@@ -45,6 +45,7 @@ export default function Main() {
         const nextTrackSource = `${baseURL}/song/${Number(id) - 1}`
         return nextTrackSource
       }
+      return prev // Add this return statement
     })
   }
 
@@ -69,10 +70,10 @@ export default function Main() {
               <button className="text-neutral-200">
                 <BiHomeAlt2 size={23} />
               </button>
-              <button className="text-gray-600">
+              <button className="text-woodsmoke-600">
                 <BiHeart size={23} />
               </button>
-              <button className="text-gray-600">
+              <button className="text-woodsmoke-600">
                 <BiSearch size={23} />
               </button>
             </div>

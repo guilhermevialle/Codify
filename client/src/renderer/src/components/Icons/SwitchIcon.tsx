@@ -1,4 +1,4 @@
-import { HTMLAttributes, useState } from 'react'
+import { HTMLAttributes } from 'react'
 
 interface Props extends HTMLAttributes<HTMLButtonElement> {
   conditional: boolean | undefined

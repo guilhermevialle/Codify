@@ -43,6 +43,8 @@ function Player({ source, goToNextSong, goToPreviousSong }: Props) {
   }
 
   function handleAudioEnded() {
+    if (!track?.isLooping) return goToNextSong()
+
     const isEnded = true
     setTrack((prev) => {
       return { ...prev, isEnded }
@@ -94,7 +96,7 @@ function Player({ source, goToNextSong, goToPreviousSong }: Props) {
     }
   }
 
-  function handleAudioLoop(e) {
+  function handleAudioLoop() {
     console.log(track?.isLooping)
 
     if (audioRef.current) {
@@ -131,24 +133,24 @@ function Player({ source, goToNextSong, goToPreviousSong }: Props) {
         <div className="w-full h-[60%]">
           <div className="w-full h-full flex items-center justify-center gap-x-4">
             <button onClick={goToPreviousSong}>
-              <MdSkipPrevious size={30} />
+              <MdSkipPrevious size={26} />
             </button>
 
             <SwitchIcon
               conditional={track?.isPlaying}
-              icon1={<FiPauseCircle size={44} />}
-              icon2={<FiPlayCircle size={44} />}
+              icon1={<FiPauseCircle size={36} />}
+              icon2={<FiPlayCircle size={36} />}
               onClick={track?.isPlaying ? pauseAudio : playAudio}
             />
 
             <button onClick={goToNextSong}>
-              <MdSkipNext size={30} />
+              <MdSkipNext size={26} />
             </button>
 
             <SwitchIcon
               conditional={!track?.isLooping}
-              icon1={<MdRepeat size={24} />}
-              icon2={<MdOutlineRepeatOne size={24} />}
+              icon1={<MdRepeat size={20} />}
+              icon2={<MdOutlineRepeatOne size={20} />}
               onClick={handleAudioLoop}
             />
           </div>

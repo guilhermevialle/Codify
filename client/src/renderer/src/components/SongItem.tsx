@@ -6,6 +6,7 @@ import { useAtom } from 'jotai'
 import { trackAtom } from '@renderer/contexts/trackAtom'
 import { baseURL } from '@renderer/services/api'
 import { FaHeart, FaRegHeart } from 'react-icons/fa'
+import useLiked from '@renderer/hooks/useLiked'
 
 type Props = {
   song: Song | undefined
@@ -13,13 +14,12 @@ type Props = {
   atClick: (id: number) => void
 }
 
-function SongItem({ song, index, atClick }: Props) {
+function SongItem({ song, atClick }: Props) {
   if (!song) return null
 
+  const { addLikedItem, removeLikedItem, isLiked } = useLiked()
   const [track, setTrack] = useAtom(trackAtom)
   const [hovering, setHover] = useState<boolean>(false)
-  const [click, setClick] = useState<boolean>(false)
-  const [hoveringHeart, setHoverHeart] = useState<boolean>(false)
 
   const theTrackThatIsPlaying = !track?.isEnded && track?.source == `${baseURL}/song/${song.id}`
 
@@ -31,14 +31,19 @@ function SongItem({ song, index, atClick }: Props) {
     }
   }, [track?.source])
 
+  function handleLikeSong() {
+    if (song) {
+      if (isLiked(song.id)) return removeLikedItem(song.id)
+
+      addLikedItem(song.id)
+    }
+  }
+
   return (
     <>
       <div
         className="w-full h-[88px] flex items-center justify-between rounded-sm hover:bg-woodsmoke-900 hover:bg-opacity-60 transition-all cursor-pointer"
-        onClick={() => {
-          setClick(true)
-          atClick(song.id)
-        }}
+        onClick={() => atClick(song.id)}
         onMouseMove={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
       >
@@ -56,12 +61,14 @@ function SongItem({ song, index, atClick }: Props) {
           <span className="text-[12px] font-light">{song.lastModified}</span>
         </div>
         <span className="w-[10%] flex justify-center text-[0.8rem]">
-          <button
-            className={`hover:text-red-400`}
-            onMouseMove={() => setHoverHeart(true)}
-            onMouseLeave={() => setHoverHeart(false)}
-          >
-            {hoveringHeart ? <FaHeart size={18} /> : <FaRegHeart size={18} />}
+          <button onClick={handleLikeSong}>
+            {isLiked(song.id) ? (
+              <i className="text-red-500">
+                <FaHeart size={18} />
+              </i>
+            ) : (
+              <i className="hover:text-red-300">{<FaRegHeart size={18} />}</i>
+            )}
           </button>
         </span>
       </div>
