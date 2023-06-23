@@ -5,5 +5,5 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 }
 
 export default function Padding({ children }: Props) {
-  return <div className="w-full h-full p-4">{children}</div>
+  return <div className="w-full h-full p-3">{children}</div>
 }

@@ -1,4 +1,5 @@
 import Padding from '@renderer/components/Ident/Padding'
+import NavButton from '@renderer/components/Lib/Buttons/NavButton'
 import Player from '@renderer/components/Player'
 import SongItem from '@renderer/components/SongItem'
 import { baseURL, getLocalSongs } from '@renderer/services/api'
@@ -47,15 +48,12 @@ export default function Main() {
   }
 
   return (
-    <main className="w-screen h-screen bg-zinc-950 text-neutral-300">
+    <main className="w-screen h-screen bg-gray-950 text-neutral-300 select-none">
       <div className="w-full h-[9%]"></div>
-      <div className="w-full h-[76%] flex">
-        <div className="w-[23%] h-full border-r-[1px] border-r-neutral-900">
+      <div className="w-full h-[73.5%] flex">
+        <div className="w-[23%] h-full border-r-[1px] border-r-gray-900">
           <Padding>
-            <h1 className="text-white">
-              <RiHomeLine />
-              Home
-            </h1>
+            <NavButton icon={<RiHomeLine />} text="Home" />
           </Padding>
         </div>
         <div className="w-[78%] h-full">
@@ -72,12 +70,14 @@ export default function Main() {
           )}
         </div>
       </div>
-      <div className="w-full h-[15%] border-t-[0.1rem] border-t-neutral-800 bg bg-zinc-900">
-        <Player
-          goToNextSong={goToNextSong}
-          goToPreviousSong={goToPreviousSong}
-          source={currentTrackSource}
-        />
+      <div className="w-full h-[17.5%] border-t-[0.1rem] border-t-gray-800 bg bg-gray-900">
+        <Padding>
+          <Player
+            goToNextSong={goToNextSong}
+            goToPreviousSong={goToPreviousSong}
+            source={currentTrackSource}
+          />
+        </Padding>
       </div>
     </main>
   )

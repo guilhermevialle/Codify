@@ -31,7 +31,7 @@ function SongItem({ song, index, atClick }: Props) {
 
   return (
     <div
-      className="w-full h-14 flex items-center justify-between rounded-sm hover:bg-neutral-900 transition-all cursor-pointer"
+      className="w-full h-[78px] flex items-center justify-between rounded-sm hover:bg-gray-900 transition-all cursor-pointer"
       onClick={() => {
         setClick(true)
         atClick(song.id)
@@ -49,7 +49,9 @@ function SongItem({ song, index, atClick }: Props) {
         )}
       </span>
       <h1
-        className={`w-[65%] truncate font-semibold ${theTrackThatIsPlaying ? 'text-blue-500' : ''}`}
+        className={`w-[65%] truncate font-semibold ${
+          theTrackThatIsPlaying ? 'text-indigo-500' : ''
+        }`}
       >
         {song.title}
         <span className="w-[20%] flex justify-center text-[12px]">{song.lastModified}</span>

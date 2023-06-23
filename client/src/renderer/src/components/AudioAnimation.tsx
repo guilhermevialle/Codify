@@ -6,18 +6,22 @@ export default function AudioAnimation() {
 
   const mustbeFrozenAnimation = track && !track?.isPlaying && !track.isEnded
 
-  console.log(mustbeFrozenAnimation)
-
   return (
     <div className="playing">
       <span
-        className={`playing__bar playing__bar1 ${mustbeFrozenAnimation ? 'paused' : ''}`}
+        className={`bg-gradient-to-b from-blue-600 to-violet-600 playing__bar playing__bar1 ${
+          mustbeFrozenAnimation ? 'paused' : ''
+        }`}
       ></span>
       <span
-        className={`playing__bar playing__bar2 ${mustbeFrozenAnimation ? 'paused' : ''}`}
+        className={`bg-gradient-to-b from-blue-600 to-violet-600 playing__bar playing__bar2 ${
+          mustbeFrozenAnimation ? 'paused' : ''
+        }`}
       ></span>
       <span
-        className={`playing__bar playing__bar3 ${mustbeFrozenAnimation ? 'paused' : ''}`}
+        className={`bg-gradient-to-b from-blue-600 to-violet-600 playing__bar playing__bar3 ${
+          mustbeFrozenAnimation ? 'paused' : ''
+        }`}
       ></span>
     </div>
   )

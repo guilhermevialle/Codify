@@ -21,7 +21,6 @@ let songs: Song[] | undefined = []
 
 getAllSongs().then((res) => {
   songs = res
-  console.log(songs)
   return
 })
 
@@ -42,7 +41,6 @@ server.get('/song/:id', async (req, res) => {
     const song = songs?.find((e) => e.id == Number(id))
     if (!song) return undefined
 
-    console.log(song?.absolutePath)
     return res.sendFile(path.join(downloads, song?.absolutePath))
   } catch (error) {
     return undefined

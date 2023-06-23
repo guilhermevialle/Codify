@@ -9,17 +9,16 @@ h1 {
 .playing {
   width: 2rem;
   height: 2rem;
-  border-radius: .3rem;
+  border-radius: 0.3rem;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  padding: .5rem;
+  padding: 0.5rem;
   box-sizing: border-box;
 }
 
 .playing__bar {
   display: inline-block;
-  background: #136bc9;
   width: 30%;
   height: 100%;
   animation: up-and-down 1.3s ease infinite alternate;
@@ -63,4 +62,45 @@ h1 {
 
 .playing__bar.paused {
   animation-play-state: paused;
+}
+
+/*********** Baseline, reset styles ***********/
+#timeAdjustmentSlider {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  width: 80%;
+}
+
+/* Removes default focus */
+#timeAdjustmentSlider:focus {
+  outline: none;
+}
+
+/******** Chrome, Safari, Opera and Edge Chromium styles ********/
+/* slider track */
+#timeAdjustmentSlider::-webkit-slider-runnable-track {
+  background-color: transparent;
+  border-radius: 1rem;
+  height: 2px;
+  visibility: none;
+}
+
+/* slider thumb */
+#timeAdjustmentSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  /* Override default look */
+  appearance: none;
+  margin-top: -5px;
+  /* Centers thumb on the track */
+  background-color: #ffffff;
+  border-radius: 4px;
+  height: 10px;
+  width: 10px;
+  box-shadow: 1px 2px 3px #000000bf;
+}
+
+#timeAdjustmentSlider:focus::-webkit-slider-thumb {
+  outline: 1px solid #ffffff60;
+  outline-offset: 1px;
 }

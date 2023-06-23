@@ -6,10 +6,13 @@ import {
   MdSkipPrevious,
   MdSkipNext,
   MdPauseCircleFilled,
-  MdRepeat
+  MdRepeat,
+  MdOutlineRepeatOne
 } from 'react-icons/md'
 import { separateTitleAndAuthor } from '@renderer/utils/separateTitleAndAuthor'
 import { formatTime } from '@renderer/utils/formatTime'
+import Slider from './Lib/Sliders/Slider'
+import SwitchIcon from './Icons/SwitchIcon'
 
 type Props = {
   goToNextSong: () => void
@@ -98,11 +101,10 @@ function Player({ source, goToNextSong, goToPreviousSong }: Props) {
   }
 
   function handleAudioLoop(e) {
-    if (audioRef.current) {
-      let isLooping
+    console.log(track?.isLooping)
 
-      if (track?.isLooping) isLooping = false
-      else isLooping = true
+    if (audioRef.current) {
+      const isLooping = !track?.isLooping
 
       setTrack((prev) => {
         return { ...prev, isLooping }
@@ -129,7 +131,7 @@ function Player({ source, goToNextSong, goToPreviousSong }: Props) {
         loop={track?.isLooping}
         autoPlay
       ></audio>
-      <div className="w-[22.15%] h-[100%] flex flex-col justify-center items-center gap-y-3 p-3">
+      <div className="w-[22.15%] h-[100%] flex flex-col justify-center items-center gap-y-3">
         <h1 className="w-full font-semibold truncate">
           {track?.metadata && separateTitleAndAuthor(track?.metadata?.title).title}
         </h1>
@@ -148,23 +150,41 @@ function Player({ source, goToNextSong, goToPreviousSong }: Props) {
                 <MdPauseCircleFilled size={44} />
               </button>
             ) : (
-              <button className={buttonVariant} onClick={playAudio}>
+              <button
+                className={`${!track?.isPlaying && 'text-violet-600'} ${buttonVariant}`}
+                onClick={playAudio}
+              >
                 <MdPlayCircle size={44} />
               </button>
             )}
             <button className={buttonVariant} onClick={goToNextSong}>
               <MdSkipNext size={30} />
             </button>
-            <button className={buttonVariant} onClick={handleAudioLoop}>
-              <MdRepeat size={24} />
-            </button>
+
+            <SwitchIcon
+              startsWith={track?.isLooping}
+              initial={<MdRepeat size={24} />}
+              after={<MdOutlineRepeatOne size={24} />}
+              onClick={handleAudioLoop}
+            />
           </div>
         </div>
-        <div className="w-full h-[40%] ">
+        <div className="w-full h-[40%]">
           <div className="w-full h-full flex flex-col items-center justify-center">
+            <div className="w-[80%] h-[3px]">
+              {track?.currentTime && track.duration && (
+                <Slider
+                  progress={{
+                    bgColor: 'bg-gradient-to-r from-blue-600 to-violet-600',
+                    current: track?.currentTime,
+                    total: track?.duration
+                  }}
+                />
+              )}
+            </div>
             <input
               id="timeAdjustmentSlider"
-              className="w-[80%] h-[2px]"
+              className="w-[80%] h-[4px] relative z-10 cursor-grabbing"
               ref={timeAdjustmentSliderRef}
               type="range"
               min="0"
@@ -173,10 +193,10 @@ function Player({ source, goToNextSong, goToPreviousSong }: Props) {
               onChange={handleAdjustAudioCurrentTime}
             />
             <div className="w-[80%] flex justify-between">
-              <span className="text-[11px] text-neutral-400">
+              <span className="text-[11px] text-neutral-300">
                 {track?.currentTime && formatTime(track.currentTime)}
               </span>
-              <span className="text-[11px] text-neutral-400">
+              <span className="text-[11px] text-neutral-300">
                 {track?.duration && formatTime(track.duration)}
               </span>
             </div>
