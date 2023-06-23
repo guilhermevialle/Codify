@@ -2,8 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-h1 {
-  font-family: 'Circular Std', sans-serif;
+* {
+  font-family: 'Quiet Sans', sans-serif;
 }
 
 .playing {
@@ -64,7 +64,6 @@ h1 {
   animation-play-state: paused;
 }
 
-/*********** Baseline, reset styles ***********/
 #timeAdjustmentSlider {
   -webkit-appearance: none;
   appearance: none;
@@ -72,35 +71,38 @@ h1 {
   width: 80%;
 }
 
-/* Removes default focus */
 #timeAdjustmentSlider:focus {
   outline: none;
 }
 
-/******** Chrome, Safari, Opera and Edge Chromium styles ********/
-/* slider track */
+
 #timeAdjustmentSlider::-webkit-slider-runnable-track {
   background-color: transparent;
   border-radius: 1rem;
   height: 2px;
   visibility: none;
 }
-
-/* slider thumb */
 #timeAdjustmentSlider::-webkit-slider-thumb {
   -webkit-appearance: none;
-  /* Override default look */
   appearance: none;
-  margin-top: -5px;
-  /* Centers thumb on the track */
+  margin-top: -8px;
   background-color: #ffffff;
-  border-radius: 4px;
-  height: 10px;
-  width: 10px;
+  border-radius: 2px;
+  height: 11px;
+  width: 7px;
   box-shadow: 1px 2px 3px #000000bf;
 }
 
+#timeAdjustmentSlider::-webkit-slider-thumb:hover {
+  transform: scale(1.5);
+  transition: all 0.3s ease;
+}
+
 #timeAdjustmentSlider:focus::-webkit-slider-thumb {
-  outline: 1px solid #ffffff60;
+  outline: 1px solid #6b58e760;
   outline-offset: 1px;
+}
+
+*::-webkit-scrollbar {
+  display: none;
 }

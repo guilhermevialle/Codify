@@ -1,13 +1,17 @@
 import { HTMLAttributes, useState } from 'react'
 
 interface Props extends HTMLAttributes<HTMLButtonElement> {
-  startsWith: boolean | undefined
-  initial: React.ReactNode
-  after: React.ReactNode
+  conditional: boolean | undefined
+  icon1: React.ReactNode
+  icon2: React.ReactNode
 }
 
-export default function SwitchIcon({ startsWith, initial, after, ...rest }: Props) {
-  if (startsWith == undefined) return null
+export default function SwitchIcon({ conditional, icon1, icon2, ...rest }: Props) {
+  if (conditional == undefined) return null
 
-  return <button {...rest}>{!startsWith ? initial : after}</button>
+  return (
+    <button className="hover:text-neutral-400 transition-all" {...rest}>
+      {conditional ? icon1 : icon2}
+    </button>
+  )
 }

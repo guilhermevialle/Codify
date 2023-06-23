@@ -13,7 +13,7 @@ export default function Slider({ progress }: Props) {
   const currentProgressPercent = (current * 100) / total
 
   return (
-    <div className="w-full h-full bg-zinc-600">
+    <div className="w-full h-[3px] bg-zinc-600 shadow-md">
       <div
         className={`w-1/2 h-full ${bgColor}`}
         style={{

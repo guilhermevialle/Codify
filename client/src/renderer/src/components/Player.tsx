@@ -1,14 +1,8 @@
 import { useAtom } from 'jotai/react'
 import { trackAtom } from '@renderer/contexts/trackAtom'
-import { useRef, useEffect, memo } from 'react'
-import {
-  MdPlayCircle,
-  MdSkipPrevious,
-  MdSkipNext,
-  MdPauseCircleFilled,
-  MdRepeat,
-  MdOutlineRepeatOne
-} from 'react-icons/md'
+import { useRef, memo } from 'react'
+import { FiPlayCircle, FiPauseCircle } from 'react-icons/fi'
+import { MdSkipPrevious, MdSkipNext, MdRepeat, MdOutlineRepeatOne } from 'react-icons/md'
 import { separateTitleAndAuthor } from '@renderer/utils/separateTitleAndAuthor'
 import { formatTime } from '@renderer/utils/formatTime'
 import Slider from './Lib/Sliders/Slider'
@@ -112,12 +106,6 @@ function Player({ source, goToNextSong, goToPreviousSong }: Props) {
     }
   }
 
-  useEffect(() => {
-    console.log(track)
-  }, [track])
-
-  const buttonVariant = 'text-zinc-400 hover:text-white transition-all'
-
   return (
     <div className="w-full h-full flex">
       <audio
@@ -142,29 +130,25 @@ function Player({ source, goToNextSong, goToPreviousSong }: Props) {
       <div className="flex-auto flex flex-col items-center justify-center">
         <div className="w-full h-[60%]">
           <div className="w-full h-full flex items-center justify-center gap-x-4">
-            <button className={buttonVariant} onClick={goToPreviousSong}>
+            <button onClick={goToPreviousSong}>
               <MdSkipPrevious size={30} />
             </button>
-            {track?.isPlaying ? (
-              <button className={buttonVariant} onClick={pauseAudio}>
-                <MdPauseCircleFilled size={44} />
-              </button>
-            ) : (
-              <button
-                className={`${!track?.isPlaying && 'text-violet-600'} ${buttonVariant}`}
-                onClick={playAudio}
-              >
-                <MdPlayCircle size={44} />
-              </button>
-            )}
-            <button className={buttonVariant} onClick={goToNextSong}>
+
+            <SwitchIcon
+              conditional={track?.isPlaying}
+              icon1={<FiPauseCircle size={44} />}
+              icon2={<FiPlayCircle size={44} />}
+              onClick={track?.isPlaying ? pauseAudio : playAudio}
+            />
+
+            <button onClick={goToNextSong}>
               <MdSkipNext size={30} />
             </button>
 
             <SwitchIcon
-              startsWith={track?.isLooping}
-              initial={<MdRepeat size={24} />}
-              after={<MdOutlineRepeatOne size={24} />}
+              conditional={!track?.isLooping}
+              icon1={<MdRepeat size={24} />}
+              icon2={<MdOutlineRepeatOne size={24} />}
               onClick={handleAudioLoop}
             />
           </div>
@@ -175,7 +159,7 @@ function Player({ source, goToNextSong, goToPreviousSong }: Props) {
               {track?.currentTime && track.duration && (
                 <Slider
                   progress={{
-                    bgColor: 'bg-gradient-to-r from-blue-600 to-violet-600',
+                    bgColor: 'bg-gradient-to-r from-rose-500 to-emerald-400',
                     current: track?.currentTime,
                     total: track?.duration
                   }}

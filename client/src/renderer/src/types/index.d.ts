@@ -15,3 +15,8 @@ export type Track = {
   isEnded?: boolean
   isLooping?: boolean
 }
+
+export type DropdownOption = {
+  text: string
+  clickFn: () => void
+}

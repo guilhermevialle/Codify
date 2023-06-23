@@ -1,10 +1,11 @@
+import Background from '@renderer/components/Background'
 import Padding from '@renderer/components/Ident/Padding'
-import NavButton from '@renderer/components/Lib/Buttons/NavButton'
+import Dropdown from '@renderer/components/Lib/Dropdowns/Dropdown'
 import Player from '@renderer/components/Player'
 import SongItem from '@renderer/components/SongItem'
 import { baseURL, getLocalSongs } from '@renderer/services/api'
 import { useState } from 'react'
-import { RiHomeLine } from 'react-icons/ri'
+import { BiHomeAlt2, BiHeart, BiSearch } from 'react-icons/bi'
 import { useQuery } from 'react-query'
 
 export default function Main() {
@@ -47,30 +48,66 @@ export default function Main() {
     })
   }
 
+  const options = [
+    {
+      text: 'Date',
+      clickFn: () => ''
+    },
+    {
+      text: 'Alphabet',
+      clickFn: () => ''
+    }
+  ]
+
   return (
-    <main className="w-screen h-screen bg-gray-950 text-neutral-300 select-none">
+    <main className="w-screen h-screen bg-woodsmoke-950 text-neutral-300 select-none">
       <div className="w-full h-[9%]"></div>
       <div className="w-full h-[73.5%] flex">
-        <div className="w-[23%] h-full border-r-[1px] border-r-gray-900">
+        <div className="w-[8%] h-full border-r-[1px] border-r-woodsmoke-900 border-opacity-50">
           <Padding>
-            <NavButton icon={<RiHomeLine />} text="Home" />
+            <div className="space-y-8 flex flex-col items-center">
+              <button className="text-neutral-200">
+                <BiHomeAlt2 size={23} />
+              </button>
+              <button className="text-gray-600">
+                <BiHeart size={23} />
+              </button>
+              <button className="text-gray-600">
+                <BiSearch size={23} />
+              </button>
+            </div>
           </Padding>
         </div>
-        <div className="w-[78%] h-full">
+        <div className="w-[92%] h-full">
           {isLoading ? (
             <h1>Loading</h1>
           ) : isError ? (
             <h1>Try again</h1>
           ) : (
-            <div className="w-full h-full py-2 space-y-3 overflow-y-auto">
-              {localSongs?.map((song, index) => (
-                <SongItem index={index} key={song.id} song={song} atClick={updateCurrentTrack} />
-              ))}
+            <div className="w-full h-full">
+              <div className="w-full h-[10%] flex justify-end">
+                <Padding>
+                  <div className="flex justify-end">
+                    <Dropdown
+                      buttonTitle="Sort playlist"
+                      buttonSize="w-[140px]"
+                      sectionSize="w-[150px]"
+                      sectionTitle=""
+                      options={options}
+                    />
+                  </div>
+                </Padding>
+              </div>
+              <div className="w-full h-[90%] py-2 overflow-y-auto">
+                {localSongs?.map((song, index) => (
+                  <SongItem index={index} key={song.id} song={song} atClick={updateCurrentTrack} />
+                ))}
+              </div>
             </div>
           )}
         </div>
       </div>
-      <div className="w-full h-[17.5%] border-t-[0.1rem] border-t-gray-800 bg bg-gray-900">
+      <div className="w-full h-[17.5%] border-t-[0.1rem] border-t-woodsmoke-800 bg bg-woodsmoke-900 bg-opacity-70">
         <Padding>
           <Player
             goToNextSong={goToNextSong}

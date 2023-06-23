@@ -5,7 +5,7 @@ type Props = {
 
 export default function NavButton({ icon, text }: Props) {
   return (
-    <button className="flex gap-x-2 items-center w-full h-11 border-[1px] hover:border-gray-700 border-gray-900 focus:border-gray-600 focus:bg-gray-900 rounded-md px-3 transition-all">
+    <button className="flex gap-x-2 items-center w-full h-11 border-[1px] hover:border-woodsmoke-700 border-woodsmoke-900 focus:border-woodsmoke-600 focus:bg-woodsmoke-900 rounded-md px-3 transition-all">
       {icon}
       {text}
     </button>

@@ -9,17 +9,17 @@ export default function AudioAnimation() {
   return (
     <div className="playing">
       <span
-        className={`bg-gradient-to-b from-blue-600 to-violet-600 playing__bar playing__bar1 ${
+        className={`bg-gradient-to-b from-rose-500  to-emerald-800 playing__bar playing__bar1 ${
           mustbeFrozenAnimation ? 'paused' : ''
         }`}
       ></span>
       <span
-        className={`bg-gradient-to-b from-blue-600 to-violet-600 playing__bar playing__bar2 ${
+        className={`bg-gradient-to-b from-rose-500 to-emerald-800 playing__bar playing__bar2 ${
           mustbeFrozenAnimation ? 'paused' : ''
         }`}
       ></span>
       <span
-        className={`bg-gradient-to-b from-blue-600 to-violet-600 playing__bar playing__bar3 ${
+        className={`bg-gradient-to-b from-rose-500 to-emerald-800 playing__bar playing__bar3 ${
           mustbeFrozenAnimation ? 'paused' : ''
         }`}
       ></span>
