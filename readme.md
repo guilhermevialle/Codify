@@ -2,6 +2,8 @@
 
 This project are in progress.
 
+Codify is a music app that allows users to listen to local PC music located in the downloads folder.
+
 ## Preview
 
 ![Codify preview](./client/preview/codify_preview.gif)
