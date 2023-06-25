@@ -6,12 +6,12 @@ import Main from './pages/Main'
 import { QueryClientProvider, QueryClient } from 'react-query'
 
 const router = createBrowserRouter([
+  // {
+  //   path: '/',
+  //   element: <App />
+  // },
   {
     path: '/',
-    element: <App />
-  },
-  {
-    path: '/songs',
     element: <Main />
   }
 ])
