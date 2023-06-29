@@ -91,47 +91,51 @@ export default function Main() {
             </Padding>
           </div>
           <div className="w-[85%] h-full">
-            {isLoading ? (
-              <h1>Loading</h1>
-            ) : isError ? (
-              <h1>Try again</h1>
-            ) : (
-              <div className="w-full h-full">
-                <div className="w-full h-[10%] flex justify-end">
-                  <Padding>
-                    <div className="flex justify-end">
-                      <Dropdown
-                        buttonTitle="Sort playlist"
-                        buttonSize="w-[140px]"
-                        sectionSize="w-[150px]"
-                        sectionTitle=""
-                        options={options}
+            <Padding>
+              {isLoading ? (
+                <h1>Loading</h1>
+              ) : isError ? (
+                <h1>Try again</h1>
+              ) : (
+                <div className="w-full h-full">
+                  <div className="w-full h-[10%] flex justify-end">
+                    <Padding>
+                      <div className="flex justify-end">
+                        <Dropdown
+                          buttonTitle="Sort playlist"
+                          buttonSize="w-[140px]"
+                          sectionSize="w-[150px]"
+                          sectionTitle=""
+                          options={options}
+                        />
+                      </div>
+                    </Padding>
+                  </div>
+                  <div className="w-full h-[90%] py-2 overflow-y-auto">
+                    {localSongs?.map((song, index) => (
+                      <SongItem
+                        index={index}
+                        key={song.id}
+                        song={song}
+                        atClick={updateCurrentTrack}
                       />
-                    </div>
-                  </Padding>
+                    ))}
+                  </div>
                 </div>
-                <div className="w-full h-[90%] py-2 overflow-y-auto">
-                  {localSongs?.map((song, index) => (
-                    <SongItem
-                      index={index}
-                      key={song.id}
-                      song={song}
-                      atClick={updateCurrentTrack}
-                    />
-                  ))}
-                </div>
-              </div>
-            )}
+              )}
+            </Padding>
           </div>
         </div>
-        <div className="w-full h-[20%] bg-dpurple-900 bg-opacity-20 backdrop-blur-sm drop-shadow-lg rounded-[40px]">
-          <Padding>
-            <Player
-              goToNextSong={goToNextSong}
-              goToPreviousSong={goToPreviousSong}
-              source={currentTrackSource}
-            />
-          </Padding>
+        <div className="w-full h-[20%] bg-zinc-800 bg-opacity-20">
+          <div className="w-full h-full bg-dpurple-900 bg-opacity-30 backdrop-blur-sm drop-shadow-lg rounded-t-[40px]">
+            <Padding>
+              <Player
+                goToNextSong={goToNextSong}
+                goToPreviousSong={goToPreviousSong}
+                source={currentTrackSource}
+              />
+            </Padding>
+          </div>
         </div>
       </main>
     </>

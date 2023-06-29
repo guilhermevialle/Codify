@@ -1,12 +1,13 @@
 import { useAtom } from 'jotai/react'
 import { trackAtom } from '@renderer/contexts/trackAtom'
-import { useRef, memo } from 'react'
-import { FiPlayCircle, FiPauseCircle } from 'react-icons/fi'
-import { MdSkipPrevious, MdSkipNext, MdRepeat, MdOutlineRepeatOne } from 'react-icons/md'
+import { useRef, memo, useEffect } from 'react'
 import { formatTime } from '@renderer/utils/formatTime'
 import Slider from './Lib/Sliders/Slider'
 import SwitchIcon from './Icons/SwitchIcon'
 import { parseSong } from '@renderer/utils/parseSong'
+import { BsPause, BsPlayFill, BsSkipStartFill, BsSoundwave, BsStar } from 'react-icons/bs'
+import { TbSwitch3 } from 'react-icons/tb'
+import WaveForm from 'wavesurfer.js'
 
 type Props = {
   goToNextSong: () => void
@@ -121,83 +122,83 @@ function Player({ source, goToNextSong, goToPreviousSong }: Props) {
         loop={track?.isLooping}
         autoPlay
       ></audio>
-      <div className="w-[22.15%] h-[100%] flex flex-col justify-center items-center gap-y-3">
+      <div className="w-[22.15%] h-[100%] flex flex-col justify-center items-center gap-y-3 border-2">
         <h1 className="w-full font-semibold truncate">
-          {track?.metadata && parseSong(track?.metadata?.title).title}
+          {track && track.metadata && parseSong(track?.metadata?.title)?.title}
         </h1>
-        <span className="w-full text-sm font-medium text-zinc-400 truncate">
-          {(track?.metadata && parseSong(track?.metadata?.title).author) || 'Unknow'}
+        <span className="w-full text-sm text-zinc-400 truncate">
+          {track && track.metadata && parseSong(track?.metadata?.title)?.author}
         </span>
       </div>
-      <div className="flex-auto flex flex-col items-center justify-center">
-        <div className="w-full h-[60%]">
-          <div className="w-full h-full flex items-center justify-center gap-x-4">
-            <button onClick={goToPreviousSong}>
-              <MdSkipPrevious size={26} />
-            </button>
+      <div className="w-fit border-2 flex items-center gap-x-1 justify-center ml-3">
+        <button onClick={goToPreviousSong}>
+          <BsSkipStartFill className="svg-shadow hover:text-white" size={26} />
+        </button>
 
-            <SwitchIcon
-              conditional={track?.isPlaying}
-              icon1={<FiPauseCircle size={36} />}
-              icon2={<FiPlayCircle size={36} />}
-              onClick={track?.isPlaying ? pauseAudio : playAudio}
-            />
+        <SwitchIcon
+          conditional={track?.isPlaying}
+          icon1={<BsPause className="svg-shadow" size={36} />}
+          icon2={<BsPlayFill className="svg-shadow" size={36} />}
+          onClick={track?.isPlaying ? pauseAudio : playAudio}
+        />
 
-            <button onClick={goToNextSong}>
-              <MdSkipNext size={26} />
-            </button>
+        <button className="rotate-180" onClick={goToNextSong}>
+          <BsSkipStartFill className="svg-shadow hover:text-white" size={26} />
+        </button>
 
-            <SwitchIcon
-              conditional={!track?.isLooping}
-              icon1={<MdRepeat size={20} />}
-              icon2={<MdOutlineRepeatOne size={20} />}
-              onClick={handleAudioLoop}
-            />
+        {/* <SwitchIcon
+          conditional={!track?.isLooping}
+          icon1={<BsRepeat className="svg-shadow" size={20} />}
+          icon2={<BsRepeat1 className="svg-shadow" size={20} />}
+          onClick={handleAudioLoop}
+        /> */}
+      </div>
+      <div className="w-[400px]">
+        <div className="w-full h-full flex flex-col items-center justify-center borer-2">
+          <div id="sliderContainer" className="w-full h-full border-2"></div>
+          {/* <div className="w-[80%] h-[3px]">
+            {track?.currentTime && track.duration && (
+              <Slider
+                progress={{
+                  bgColor: 'bg-gradient-to-r from-rose-500 to-emerald-400',
+                  current: track?.currentTime,
+                  total: track?.duration
+                }}
+              />
+            )}
           </div>
-        </div>
-        <div className="w-full h-[40%]">
-          <div className="w-full h-full flex flex-col items-center justify-center">
-            <div className="w-[80%] h-[3px]">
-              {track?.currentTime && track.duration && (
-                <Slider
-                  progress={{
-                    bgColor: 'bg-gradient-to-r from-rose-500 to-emerald-400',
-                    current: track?.currentTime,
-                    total: track?.duration
-                  }}
-                />
-              )}
-            </div>
-            <input
-              id="timeAdjustmentSlider"
-              className="w-[80%] h-[4px] relative z-10 cursor-grabbing"
-              ref={timeAdjustmentSliderRef}
-              type="range"
-              min="0"
-              max={track?.duration}
-              step="0.1"
-              onChange={handleAdjustAudioCurrentTime}
-            />
-            <div className="w-[80%] flex justify-between">
-              <span className="text-[11px] font-semibold">
-                {track?.currentTime && formatTime(track.currentTime)}
-              </span>
-              <span className="text-[11px] font-semibold text-zinc-500">
-                {track?.duration && formatTime(track.duration)}
-              </span>
-            </div>
-          </div>
+          <input
+            id="timeAdjustmentSlider"
+            className="w-[80%] h-[4px] relative z-10 cursor-grabbing"
+            ref={timeAdjustmentSliderRef}
+            type="range"
+            min="0"
+            max={track?.duration}
+            step="0.1"
+            onChange={handleAdjustAudioCurrentTime}
+          />
+          <div className="w-[80%] flex justify-between">
+            <span className="text-[11px] font-semibold">
+              {track?.currentTime && formatTime(track.currentTime)}
+            </span>
+            <span className="text-[11px] font-semibold text-zinc-500">
+              {track?.duration && formatTime(track.duration)}
+            </span>
+          </div> */}
         </div>
       </div>
-      <div className="w-[22.15%] h-full flex flex-col justify-center items-center gap-y-3">
-        <input
+      <div className="flex-auto h-full flex justify-center items-center gap-3 border-2">
+        {<BsStar />}
+        <BsSoundwave />
+        <TbSwitch3 />
+        {/* <input
           className="w-[50%] h-[2px]"
           type="range"
           min="0"
           max="1"
           step="0.01"
           onChange={handleAdjustAudioVolume}
-        />
+        /> */}
       </div>
     </div>
   )

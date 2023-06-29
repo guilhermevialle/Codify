@@ -5,7 +5,7 @@ import icon from '../../resources/icon.png?asset'
 
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
-    width: 940,
+    width: 970,
     height: 600,
     resizable: false,
     show: false,

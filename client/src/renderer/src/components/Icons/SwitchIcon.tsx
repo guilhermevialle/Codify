@@ -10,7 +10,10 @@ export default function SwitchIcon({ conditional, icon1, icon2, ...rest }: Props
   if (conditional == undefined) return null
 
   return (
-    <button className="hover:text-neutral-400 transition-all" {...rest}>
+    <button
+      className="bg-gradient-to-br from-purple-700 via-pink-400 to-sky-400 rounded-full transition-all text-white p-[1px] shadow-md"
+      {...rest}
+    >
       {conditional ? icon1 : icon2}
     </button>
   )

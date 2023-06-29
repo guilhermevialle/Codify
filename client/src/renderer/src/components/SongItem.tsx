@@ -5,8 +5,8 @@ import AudioAnimation from './AudioAnimation'
 import { useAtom } from 'jotai'
 import { trackAtom } from '@renderer/contexts/trackAtom'
 import { baseURL } from '@renderer/services/api'
-import { FaHeart, FaRegHeart } from 'react-icons/fa'
 import useLiked from '@renderer/hooks/useLiked'
+import { BsStar, BsStarFill } from 'react-icons/bs'
 import { parseSong } from '@renderer/utils/parseSong'
 
 type Props = {
@@ -45,7 +45,7 @@ function SongItem({ song, atClick }: Props) {
 
   return (
     <div
-      className="w-full h-[88px] flex items-center justify-between rounded-sm hover:bg-zinc-600 hover:bg-opacity-20 hover:backdrop-blur-sm hover:drop-shadow-lg transition-all cursor-pointer"
+      className="w-full h-[88px] flex items-center justify-between rounded-sm hover:bg-dpurple-950-600 hover:bg-opacity-20 hover:backdrop-blur-sm hover:drop-shadow-lg transition-all cursor-pointer"
       onClick={() => atClick(song.id)}
       onMouseMove={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
@@ -72,11 +72,11 @@ function SongItem({ song, atClick }: Props) {
       <span className="w-[10%] flex justify-center text-[0.8rem]">
         <button onClick={handleLikeSong}>
           {isLiked(song.id) ? (
-            <i className="text-red-500">
-              <FaHeart size={18} />
+            <i className="text-yellow-400">
+              <BsStarFill className="svg-shadow" size={16} />
             </i>
           ) : (
-            <i className="hover:text-red-300">{<FaRegHeart size={18} />}</i>
+            <i className="hover:text-yellow-200">{<BsStar className="svg-shadow" size={16} />}</i>
           )}
         </button>
       </span>
