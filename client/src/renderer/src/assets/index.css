@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 * {
-  font-family: 'Quiet Sans', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .playing {
@@ -75,7 +75,6 @@
   outline: none;
 }
 
-
 #timeAdjustmentSlider::-webkit-slider-runnable-track {
   background-color: transparent;
   border-radius: 1rem;
@@ -106,3 +105,18 @@
 *::-webkit-scrollbar {
   display: none;
 }
+
+.candle {
+  filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.5));
+}
+
+.candle-2 {
+  filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.15));
+}
+
+.svg-shadow {
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.5));
+}
+.svg-shadow-2 {
+  filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.8));
+} 

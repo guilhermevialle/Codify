@@ -3,10 +3,10 @@ import { trackAtom } from '@renderer/contexts/trackAtom'
 import { useRef, memo } from 'react'
 import { FiPlayCircle, FiPauseCircle } from 'react-icons/fi'
 import { MdSkipPrevious, MdSkipNext, MdRepeat, MdOutlineRepeatOne } from 'react-icons/md'
-import { separateTitleAndAuthor } from '@renderer/utils/separateTitleAndAuthor'
 import { formatTime } from '@renderer/utils/formatTime'
 import Slider from './Lib/Sliders/Slider'
 import SwitchIcon from './Icons/SwitchIcon'
+import { parseSong } from '@renderer/utils/parseSong'
 
 type Props = {
   goToNextSong: () => void
@@ -123,10 +123,10 @@ function Player({ source, goToNextSong, goToPreviousSong }: Props) {
       ></audio>
       <div className="w-[22.15%] h-[100%] flex flex-col justify-center items-center gap-y-3">
         <h1 className="w-full font-semibold truncate">
-          {track?.metadata && separateTitleAndAuthor(track?.metadata?.title).title}
+          {track?.metadata && parseSong(track?.metadata?.title).title}
         </h1>
         <span className="w-full text-sm font-medium text-zinc-400 truncate">
-          {(track?.metadata && separateTitleAndAuthor(track?.metadata?.title).author) || 'Unknow'}
+          {(track?.metadata && parseSong(track?.metadata?.title).author) || 'Unknow'}
         </span>
       </div>
       <div className="flex-auto flex flex-col items-center justify-center">
@@ -179,10 +179,10 @@ function Player({ source, goToNextSong, goToPreviousSong }: Props) {
               onChange={handleAdjustAudioCurrentTime}
             />
             <div className="w-[80%] flex justify-between">
-              <span className="text-[11px] text-neutral-300">
+              <span className="text-[11px] font-semibold">
                 {track?.currentTime && formatTime(track.currentTime)}
               </span>
-              <span className="text-[11px] text-neutral-300">
+              <span className="text-[11px] font-semibold text-zinc-500">
                 {track?.duration && formatTime(track.duration)}
               </span>
             </div>

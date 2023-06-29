@@ -1,15 +1,10 @@
 import { createRoot } from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import App from './App'
+import { createHashRouter, RouterProvider } from 'react-router-dom'
 import './assets/index.css'
 import Main from './pages/Main'
 import { QueryClientProvider, QueryClient } from 'react-query'
 
-const router = createBrowserRouter([
-  // {
-  //   path: '/',
-  //   element: <App />
-  // },
+const router = createHashRouter([
   {
     path: '/',
     element: <Main />
