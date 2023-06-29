@@ -2,12 +2,11 @@ import { useAtom } from 'jotai/react'
 import { trackAtom } from '@renderer/contexts/trackAtom'
 import { useRef, memo, useEffect } from 'react'
 import { formatTime } from '@renderer/utils/formatTime'
-import Slider from './Lib/Sliders/Slider'
 import SwitchIcon from './Icons/SwitchIcon'
 import { parseSong } from '@renderer/utils/parseSong'
 import { BsPause, BsPlayFill, BsSkipStartFill, BsSoundwave, BsStar } from 'react-icons/bs'
 import { TbSwitch3 } from 'react-icons/tb'
-import WaveForm from 'wavesurfer.js'
+import TrackSlider from './TrackSlider'
 
 type Props = {
   goToNextSong: () => void
@@ -88,12 +87,9 @@ function Player({ source, goToNextSong, goToPreviousSong }: Props) {
     }
   }
 
-  function handleAdjustAudioCurrentTime(e) {
-    const input = e.target as HTMLInputElement
-    const currentSliderTime = Number(input.value)
-
+  function handleAdjustAudioCurrentTime(value: number) {
     if (audioRef.current) {
-      audioRef.current.currentTime = currentSliderTime
+      audioRef.current.currentTime = value
     }
   }
 
@@ -122,7 +118,7 @@ function Player({ source, goToNextSong, goToPreviousSong }: Props) {
         loop={track?.isLooping}
         autoPlay
       ></audio>
-      <div className="w-[22.15%] h-[100%] flex flex-col justify-center items-center gap-y-3 border-2">
+      <div className="w-[150px] h-[100%] flex flex-col justify-center items-center gap-y-3">
         <h1 className="w-full font-semibold truncate">
           {track && track.metadata && parseSong(track?.metadata?.title)?.title}
         </h1>
@@ -130,7 +126,7 @@ function Player({ source, goToNextSong, goToPreviousSong }: Props) {
           {track && track.metadata && parseSong(track?.metadata?.title)?.author}
         </span>
       </div>
-      <div className="w-fit border-2 flex items-center gap-x-1 justify-center ml-3">
+      <div className="w-fit flex items-center gap-x-3 justify-center px-4">
         <button onClick={goToPreviousSong}>
           <BsSkipStartFill className="svg-shadow hover:text-white" size={26} />
         </button>
@@ -145,52 +141,24 @@ function Player({ source, goToNextSong, goToPreviousSong }: Props) {
         <button className="rotate-180" onClick={goToNextSong}>
           <BsSkipStartFill className="svg-shadow hover:text-white" size={26} />
         </button>
-
-        {/* <SwitchIcon
-          conditional={!track?.isLooping}
-          icon1={<BsRepeat className="svg-shadow" size={20} />}
-          icon2={<BsRepeat1 className="svg-shadow" size={20} />}
-          onClick={handleAudioLoop}
-        /> */}
       </div>
-      <div className="w-[400px]">
+      <div className="flex-auto">
         <div className="w-full h-full flex flex-col items-center justify-center borer-2">
-          <div id="sliderContainer" className="w-full h-full border-2"></div>
-          {/* <div className="w-[80%] h-[3px]">
-            {track?.currentTime && track.duration && (
-              <Slider
-                progress={{
-                  bgColor: 'bg-gradient-to-r from-rose-500 to-emerald-400',
-                  current: track?.currentTime,
-                  total: track?.duration
-                }}
-              />
-            )}
-          </div>
-          <input
-            id="timeAdjustmentSlider"
-            className="w-[80%] h-[4px] relative z-10 cursor-grabbing"
-            ref={timeAdjustmentSliderRef}
-            type="range"
-            min="0"
-            max={track?.duration}
-            step="0.1"
-            onChange={handleAdjustAudioCurrentTime}
+          <TrackSlider
+            playerFunctions={{
+              handleAdjustAudioCurrentTime
+            }}
+            time={{
+              currentTime: track?.currentTime,
+              duration: track?.duration
+            }}
           />
-          <div className="w-[80%] flex justify-between">
-            <span className="text-[11px] font-semibold">
-              {track?.currentTime && formatTime(track.currentTime)}
-            </span>
-            <span className="text-[11px] font-semibold text-zinc-500">
-              {track?.duration && formatTime(track.duration)}
-            </span>
-          </div> */}
         </div>
       </div>
-      <div className="flex-auto h-full flex justify-center items-center gap-3 border-2">
-        {<BsStar />}
-        <BsSoundwave />
-        <TbSwitch3 />
+      <div className="w-fit h-full flex justify-center items-center gap-x-6 px-4">
+        {<BsStar className="svg-shadow" />}
+        <BsSoundwave className="svg-shadow" />
+        <TbSwitch3 className="svg-shadow" />
         {/* <input
           className="w-[50%] h-[2px]"
           type="range"
