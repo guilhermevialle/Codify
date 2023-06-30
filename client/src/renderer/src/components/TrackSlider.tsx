@@ -8,8 +8,8 @@ const peaksConfig: Peaks = {
   peakWidth: 4,
   gapSize: 6,
   range: {
-    min: 17,
-    max: 48
+    min: 13,
+    max: 40
   }
 }
 
@@ -57,6 +57,10 @@ function TrackSlider({ time, playerFunctions }: Props) {
     }
   }
 
+  function handleMouseLeave() {
+    setIsDragging(false)
+  }
+
   const { handleAdjustAudioCurrentTime } = playerFunctions
   const { currentTime, duration } = time
   const mainRef = useRef<HTMLButtonElement>(null)
@@ -73,7 +77,7 @@ function TrackSlider({ time, playerFunctions }: Props) {
   }
 
   function changeProgressBar(width: number) {
-    if (progressRef.current) {
+    if (progressRef.current && duration && currentTime) {
       progressRef.current.style.width = width + 'px'
     }
   }
@@ -84,27 +88,22 @@ function TrackSlider({ time, playerFunctions }: Props) {
     }
   }, [time])
 
-  useEffect(() => {
-    console.log(
-      {
-        isDragging
-      },
-      mousePosition
-    )
-  }, [mousePosition, isDragging])
-
   return (
     <button
       ref={mainRef}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
-      className={`w-full h-[74%] gap-x-[6px] flex items-center justify-center relative px-2 cursor-grab focus:cursor-grabbing`}
+      onMouseLeave={handleMouseLeave}
+      className={`w-full h-[100%] gap-x-[6px] flex items-center justify-center relative px-3 cursor-grab focus:cursor-grabbing`}
     >
-      <div ref={cursorRef} className={`absolute w-[5px] h-full bg-rose-500 z-10 shadow-lg`}></div>
+      <div
+        ref={cursorRef}
+        className={`absolute w-[5px] h-full bg-transparent z-10 shadow-lg rounded-tr-3xl`}
+      ></div>
       <div
         ref={progressRef}
-        className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-300 via-violet-500 to-rose-400"
+        className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-300 via-violet-500 to-rose-400 rounded-3xl border-r-red-500 border-r-[7px] shadow-lg glow"
       ></div>
       {peaksArray.map((height, index) => {
         return (

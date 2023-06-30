@@ -8,7 +8,6 @@ import { useState } from 'react'
 import { MdHomeFilled, MdMusicNote } from 'react-icons/md'
 import { IoMdHeart } from 'react-icons/io'
 import { useQuery } from 'react-query'
-import { parseSong } from '@renderer/utils/parseSong'
 
 export default function Main() {
   const [currentTrackSource, setCurrentTrackSource] = useState<string | undefined>(undefined)

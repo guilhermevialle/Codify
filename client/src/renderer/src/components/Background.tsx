@@ -11,7 +11,7 @@ export default function Background() {
             height="400%"
             filterUnits="objectBoundingBox"
             primitiveUnits="userSpaceOnUse"
-            color-interpolation-filters="sRGB"
+            colorInterpolationFilters="sRGB"
           >
             <feGaussianBlur
               stdDeviation="130"

@@ -1,6 +1,6 @@
 import { useAtom } from 'jotai/react'
 import { trackAtom } from '@renderer/contexts/trackAtom'
-import { useRef, memo, useEffect } from 'react'
+import { useRef, memo } from 'react'
 import { formatTime } from '@renderer/utils/formatTime'
 import SwitchIcon from './Icons/SwitchIcon'
 import { parseSong } from '@renderer/utils/parseSong'
@@ -74,6 +74,7 @@ function Player({ source, goToNextSong, goToPreviousSong }: Props) {
     }
   }
 
+  //@ts-ignore
   function handleAdjustAudioVolume(e) {
     const input = e.target as HTMLInputElement
     const currentVolume = Number(input.value)
@@ -93,9 +94,8 @@ function Player({ source, goToNextSong, goToPreviousSong }: Props) {
     }
   }
 
+  //@ts-ignore
   function handleAudioLoop() {
-    console.log(track?.isLooping)
-
     if (audioRef.current) {
       const isLooping = !track?.isLooping
 
@@ -143,30 +143,34 @@ function Player({ source, goToNextSong, goToPreviousSong }: Props) {
         </button>
       </div>
       <div className="flex-auto">
-        <div className="w-full h-full flex flex-col items-center justify-center borer-2">
-          <TrackSlider
-            playerFunctions={{
-              handleAdjustAudioCurrentTime
-            }}
-            time={{
-              currentTime: track?.currentTime,
-              duration: track?.duration
-            }}
-          />
+        <div className="w-full h-full flex flex-col justify-center items-center">
+          <div className="w-full h-[70%]">
+            <TrackSlider
+              playerFunctions={{
+                handleAdjustAudioCurrentTime
+              }}
+              time={{
+                currentTime: track?.currentTime,
+                duration: track?.duration
+              }}
+            />
+          </div>
+          <div className="w-full h-[30%] flex justify-between items-end px-2">
+            <span className="text-sm font-medium">
+              {track?.currentTime && formatTime(track?.currentTime)}
+            </span>
+            <span className="text-sm font-medium text-zinc-500">
+              {track?.duration && formatTime(track?.duration)}
+            </span>
+          </div>
         </div>
       </div>
       <div className="w-fit h-full flex justify-center items-center gap-x-6 px-4">
-        {<BsStar className="svg-shadow" />}
-        <BsSoundwave className="svg-shadow" />
-        <TbSwitch3 className="svg-shadow" />
-        {/* <input
-          className="w-[50%] h-[2px]"
-          type="range"
-          min="0"
-          max="1"
-          step="0.01"
-          onChange={handleAdjustAudioVolume}
-        /> */}
+        {<BsStar size={19} className="svg-shadow" />}
+        <div className="relative flex items-center justify-center">
+          <BsSoundwave size={19} className="svg-shadow" />
+        </div>
+        <TbSwitch3 size={19} className="svg-shadow" />
       </div>
     </div>
   )

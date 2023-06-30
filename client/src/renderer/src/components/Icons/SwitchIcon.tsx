@@ -11,7 +11,7 @@ export default function SwitchIcon({ conditional, icon1, icon2, ...rest }: Props
 
   return (
     <button
-      className="bg-gradient-to-br from-purple-700 via-pink-400 to-sky-400 rounded-full transition-all text-white p-[1px] shadow-md"
+      className="bg-gradient-to-br from-purple-700 via-pink-400 to-sky-400 rounded-full transition-all text-white p-[1px] shadow-md glow"
       {...rest}
     >
       {conditional ? icon1 : icon2}
