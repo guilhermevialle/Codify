@@ -100,13 +100,13 @@ export default function Main() {
                   <div className="w-full h-[10%] flex justify-end">
                     <Padding>
                       <div className="flex justify-end">
-                        <Dropdown
+                        {/* <Dropdown
                           buttonTitle="Sort playlist"
                           buttonSize="w-[140px]"
                           sectionSize="w-[150px]"
                           sectionTitle=""
                           options={options}
-                        />
+                        /> */}
                       </div>
                     </Padding>
                   </div>
