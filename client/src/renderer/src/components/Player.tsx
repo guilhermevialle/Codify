@@ -2,19 +2,21 @@ import { useAtom } from 'jotai/react'
 import { trackAtom } from '@renderer/contexts/trackAtom'
 import { useRef, memo } from 'react'
 import { formatTime } from '@renderer/utils/formatTime'
-import SwitchIcon from './Icons/SwitchIcon'
+import SwitchIcon from './Lib/Icons/SwitchIcon'
 import { parseSong } from '@renderer/utils/parseSong'
-import { BsPause, BsPlayFill, BsSkipStartFill, BsSoundwave, BsStar } from 'react-icons/bs'
-import { TbSwitch3 } from 'react-icons/tb'
-import TrackSlider from './TrackSlider'
+import { BsPause, BsPlayFill, BsSkipStartFill, BsSoundwave } from 'react-icons/bs'
+import TrackSlider from './Track/TrackSlider'
+import Liked from './Lib/Icons/Liked'
+import TrackLoop from './Lib/Icons/TrackLoop'
 
 type Props = {
   goToNextSong: () => void
   goToPreviousSong: () => void
+  goToNextRandomSong: () => void
   source: string | undefined
 }
 
-function Player({ source, goToNextSong, goToPreviousSong }: Props) {
+function Player({ source, goToNextSong, goToPreviousSong, goToNextRandomSong }: Props) {
   if (!source) return null
 
   const [track, setTrack] = useAtom(trackAtom)
@@ -150,8 +152,8 @@ function Player({ source, goToNextSong, goToPreviousSong }: Props) {
                 handleAdjustAudioCurrentTime
               }}
               time={{
-                currentTime: track?.currentTime,
-                duration: track?.duration
+                currentTime: track?.currentTime ?? 0,
+                duration: track?.duration ?? 0
               }}
             />
           </div>
@@ -166,11 +168,11 @@ function Player({ source, goToNextSong, goToPreviousSong }: Props) {
         </div>
       </div>
       <div className="w-fit h-full flex justify-center items-center gap-x-6 px-4">
-        {<BsStar size={19} className="svg-shadow" />}
+        <Liked id={track?.metadata?.id} />
         <div className="relative flex items-center justify-center">
           <BsSoundwave size={19} className="svg-shadow" />
         </div>
-        <TbSwitch3 size={19} className="svg-shadow" />
+        <TrackLoop />
       </div>
     </div>
   )

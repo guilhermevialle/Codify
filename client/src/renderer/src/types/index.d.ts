@@ -14,6 +14,7 @@ export type Track = {
   source?: string
   isEnded?: boolean
   isLooping?: boolean
+  isRandomized?: boolean
 }
 
 export type DropdownOption = {
@@ -35,3 +36,5 @@ export type Peaks = {
     max: number
   }
 }
+
+export type TrackLoopMethod = 'randomLoop' | 'uniqueTrackLoop' | 'allTracksLoop'

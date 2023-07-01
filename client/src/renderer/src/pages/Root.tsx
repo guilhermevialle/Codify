@@ -1,13 +1,13 @@
 import Background from '@renderer/components/Background'
 import Padding from '@renderer/components/Ident/Padding'
-import Dropdown from '@renderer/components/Lib/Dropdowns/Dropdown'
 import Player from '@renderer/components/Player'
-import SongItem from '@renderer/components/SongItem'
 import { baseURL, getLocalSongs } from '@renderer/services/api'
 import { useState } from 'react'
 import { MdHomeFilled, MdMusicNote } from 'react-icons/md'
 import { IoMdHeart } from 'react-icons/io'
 import { useQuery } from 'react-query'
+import { getRandomInt } from '@renderer/utils/getRandomInt'
+import { Track } from '@renderer/components/Track'
 
 export default function Main() {
   const [currentTrackSource, setCurrentTrackSource] = useState<string | undefined>(undefined)
@@ -51,16 +51,19 @@ export default function Main() {
     })
   }
 
-  const options = [
-    {
-      text: 'Date',
-      clickFn: () => ''
-    },
-    {
-      text: 'Alphabet',
-      clickFn: () => ''
+  function goToNextRandomSong() {
+    if (localSongs) {
+      const id = getRandomInt(0, localSongs?.length - 1)
+
+      setCurrentTrackSource((prev) => {
+        if (prev) {
+          const nextTrackSource = `${baseURL}/song/${Number(id)}`
+          return nextTrackSource
+        }
+        return prev
+      })
     }
-  ]
+  }
 
   return (
     <>
@@ -99,24 +102,15 @@ export default function Main() {
                 <div className="w-full h-full">
                   <div className="w-full h-[10%] flex justify-end">
                     <Padding>
-                      <div className="flex justify-end">
-                        {/* <Dropdown
-                          buttonTitle="Sort playlist"
-                          buttonSize="w-[140px]"
-                          sectionSize="w-[150px]"
-                          sectionTitle=""
-                          options={options}
-                        /> */}
-                      </div>
+                      <div className="flex justify-end"></div>
                     </Padding>
                   </div>
                   <div className="w-full h-[90%] py-2 overflow-y-auto">
                     {localSongs?.map((song, index) => (
-                      <SongItem
+                      <Track.Provider
+                        updateCurrentTrack={updateCurrentTrack}
                         index={index}
-                        key={song.id}
                         song={song}
-                        atClick={updateCurrentTrack}
                       />
                     ))}
                   </div>
@@ -131,6 +125,7 @@ export default function Main() {
               <Player
                 goToNextSong={goToNextSong}
                 goToPreviousSong={goToPreviousSong}
+                goToNextRandomSong={goToNextRandomSong}
                 source={currentTrackSource}
               />
             </Padding>

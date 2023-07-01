@@ -1,13 +1,13 @@
 import { createRoot } from 'react-dom/client'
 import { createHashRouter, RouterProvider } from 'react-router-dom'
 import './assets/index.css'
-import Main from './pages/Main'
+import Root from './pages/Root'
 import { QueryClientProvider, QueryClient } from 'react-query'
 
 const router = createHashRouter([
   {
     path: '/',
-    element: <Main />
+    element: <Root />
   }
 ])
 

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState, memo } from 'react'
-import { MousePosition, Peaks } from '@renderer/types'
+import { Peaks } from '@renderer/types'
 import { generatePeaksArray } from '@renderer/utils/generatePeaksArray'
-import Peak from './Peak'
+import Peak from '../Peak'
 
 const peaksConfig: Peaks = {
   containerWidth: 421,
@@ -18,14 +18,13 @@ const peaksArray = generatePeaksArray(peaksConfig)
 type Props = {
   playerFunctions: { handleAdjustAudioCurrentTime: (value: number) => void }
   time: {
-    currentTime: number | undefined
-    duration: number | undefined
+    currentTime: number
+    duration: number
   }
 }
 
 function TrackSlider({ time, playerFunctions }: Props) {
   const [isDragging, setIsDragging] = useState(false)
-  const [mousePosition, setMousePosition] = useState<MousePosition>({ x: 0, y: 0 })
 
   function handleMouseDown() {
     setIsDragging(true)
@@ -36,23 +35,21 @@ function TrackSlider({ time, playerFunctions }: Props) {
       const rect = event.currentTarget.getBoundingClientRect()
       const x = event.clientX - rect.left
       if (x >= 0 && x <= rect.width) {
-        setMousePosition({
-          x,
-          y: event.clientY - rect.top
-        })
         if (cursorRef.current && progressRef.current) {
-          cursorRef.current.style.left = mousePosition.x + 'px'
-          progressRef.current.style.width = mousePosition.x + 'px'
+          cursorRef.current.style.left = x + 'px'
+          progressRef.current.style.width = x + 'px'
         }
       }
     }
   }
 
-  const handleMouseUp = () => {
+  const handleMouseUp = (event) => {
     setIsDragging(false)
     if (mainRef.current && duration) {
       const mainWidth = mainRef.current.clientWidth
-      const position = (mousePosition.x * duration) / mainWidth
+      const rect = mainRef.current.getBoundingClientRect()
+      const x = event.clientX - rect.left
+      const position = (x * duration) / mainWidth
       handleAdjustAudioCurrentTime(position)
     }
   }
@@ -67,24 +64,12 @@ function TrackSlider({ time, playerFunctions }: Props) {
   const cursorRef = useRef<HTMLDivElement>(null)
   const progressRef = useRef<HTMLDivElement>(null)
 
-  function changeCursorPosition(currentTime: number, duration: number) {
-    if (mainRef.current && cursorRef.current) {
+  useEffect(() => {
+    if (!isDragging && mainRef.current && cursorRef.current && progressRef.current) {
       const mainWidth = mainRef.current.clientWidth
       const position = (currentTime * mainWidth) / duration
-      changeProgressBar(position)
+      progressRef.current.style.width = position + 'px'
       cursorRef.current.style.left = position + 'px'
-    }
-  }
-
-  function changeProgressBar(width: number) {
-    if (progressRef.current && duration && currentTime) {
-      progressRef.current.style.width = width + 'px'
-    }
-  }
-
-  useEffect(() => {
-    if (currentTime && duration && !isDragging) {
-      changeCursorPosition(currentTime, duration)
     }
   }, [time])
 
