@@ -9,10 +9,12 @@ function createWindow(): void {
     height: 600,
     resizable: false,
     show: false,
+    title: 'Codify',
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       webSecurity: false,
+      disableHtmlFullscreenWindowResize: true,
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false,
       nodeIntegration: true,

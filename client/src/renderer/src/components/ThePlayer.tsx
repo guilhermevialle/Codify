@@ -5,7 +5,6 @@ import { formatTime } from '@renderer/utils/formatTime'
 import SwitchIcon from './Lib/Icons/SwitchIcon'
 import { parseSong } from '@renderer/utils/parseSong'
 import { BsPause, BsPlayFill, BsSkipStartFill, BsSoundwave } from 'react-icons/bs'
-import TrackSlider from './Track/TrackSlider'
 import TrackLoop from './Lib/Icons/TrackLoop'
 import Liked from './Lib/Icons/Liked'
 import Slider from './Lib/Sliders/Slider/Slider'
@@ -131,7 +130,7 @@ function ThePlayer({ source, goToNextSong, goToPreviousSong, goToNextRandomSong 
       </div>
       <div className="w-fit flex items-center gap-x-3 justify-center px-4">
         <button onClick={goToPreviousSong}>
-          <BsSkipStartFill className="svg-shadow hover:text-white" size={26} />
+          <BsSkipStartFill className="svg-shadow hover:text-white" size={24} />
         </button>
 
         <SwitchIcon
@@ -142,7 +141,7 @@ function ThePlayer({ source, goToNextSong, goToPreviousSong, goToNextRandomSong 
         />
 
         <button className="rotate-180" onClick={goToNextSong}>
-          <BsSkipStartFill className="svg-shadow hover:text-white" size={26} />
+          <BsSkipStartFill className="svg-shadow hover:text-white" size={24} />
         </button>
       </div>
       <div className="flex-auto">
@@ -163,15 +162,6 @@ function ThePlayer({ source, goToNextSong, goToPreviousSong, goToNextRandomSong 
                 updateValue: handleAdjustAudioCurrentTime
               }}
             />
-            {/* <TrackSlider
-              playerFunctions={{
-                handleAdjustAudioCurrentTime
-              }}
-              time={{
-                currentTime: track?.currentTime ?? 0,
-                duration: track?.duration ?? 0
-              }}
-            /> */}
           </div>
           <div className="w-full h-[30%] flex justify-between items-end px-2">
             <span className="text-sm font-medium">

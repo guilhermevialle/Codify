@@ -21,10 +21,10 @@ export default function Liked({ id }: Props) {
     <button onClick={handleLikeSong}>
       {isLiked(id) ? (
         <i className="text-yellow-400">
-          <BsStarFill className="svg-shadow" size={16} />
+          <BsStarFill className="svg-shadow" size={14} />
         </i>
       ) : (
-        <i className="hover:text-yellow-200">{<BsStar className="svg-shadow" size={16} />}</i>
+        <i className="hover:text-yellow-200">{<BsStar className="svg-shadow" size={14} />}</i>
       )}
     </button>
   )

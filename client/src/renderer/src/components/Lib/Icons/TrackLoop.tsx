@@ -20,11 +20,11 @@ export default function TrackLoop({}: Props) {
   let icon
 
   if (currentLoopMethod == 'randomLoop') {
-    icon = <TbSwitch3 size={19} className="svg-shadow" />
+    icon = <TbSwitch3 size={16} className="svg-shadow" />
   } else if (currentLoopMethod == 'uniqueTrackLoop') {
-    icon = <BsRepeat1 size={19} className="svg-shadow" />
+    icon = <BsRepeat1 size={16} className="svg-shadow" />
   } else if (currentLoopMethod == 'allTracksLoop') {
-    icon = <BsRepeat size={19} className="svg-shadow" />
+    icon = <BsRepeat size={16} className="svg-shadow" />
   }
 
   return <button onClick={handleSwitchTrack}>{icon}</button>
