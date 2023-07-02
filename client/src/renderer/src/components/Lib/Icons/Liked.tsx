@@ -6,14 +6,13 @@ type Props = {
 }
 
 export default function Liked({ id }: Props) {
-  if (id != 0 && !id) return null
+  if (Number.isNaN(id) || id == undefined) return null
 
   const { addLikedItem, isLiked, removeLikedItem } = useLiked()
 
   function handleLikeSong() {
-    if (id) {
+    if (!Number.isNaN(id) && id !== undefined) {
       if (isLiked(id)) return removeLikedItem(id)
-
       addLikedItem(id)
     }
   }

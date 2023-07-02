@@ -1,6 +1,6 @@
 import Background from '@renderer/components/Background'
 import Padding from '@renderer/components/Ident/Padding'
-import Player from '@renderer/components/Player'
+import ThePlayer from '@renderer/components/ThePlayer'
 import { baseURL, getLocalSongs } from '@renderer/services/api'
 import { useState } from 'react'
 import { MdHomeFilled, MdMusicNote } from 'react-icons/md'
@@ -8,6 +8,7 @@ import { IoMdHeart } from 'react-icons/io'
 import { useQuery } from 'react-query'
 import { getRandomInt } from '@renderer/utils/getRandomInt'
 import { Track } from '@renderer/components/Track'
+import { Link } from 'react-router-dom'
 
 export default function Main() {
   const [currentTrackSource, setCurrentTrackSource] = useState<string | undefined>(undefined)
@@ -83,12 +84,14 @@ export default function Main() {
                     size={23}
                   />
                 </button>
-                <button className="text-woodsmoke-600">
-                  <IoMdHeart
-                    className="svg-shadow hover:text-neutral-200 transition-all ease-in-out duration-[400]"
-                    size={23}
-                  />
-                </button>
+                <Link to={'/liked'}>
+                  <button className="text-woodsmoke-600">
+                    <IoMdHeart
+                      className="svg-shadow hover:text-neutral-200 transition-all ease-in-out duration-[400]"
+                      size={23}
+                    />
+                  </button>
+                </Link>
               </div>
             </Padding>
           </div>
@@ -122,7 +125,7 @@ export default function Main() {
         <div className="w-full h-[20%] bg-zinc-800 bg-opacity-20">
           <div className="w-full h-full bg-dpurple-900 bg-opacity-30 backdrop-blur-sm drop-shadow-lg rounded-t-[40px]">
             <Padding>
-              <Player
+              <ThePlayer
                 goToNextSong={goToNextSong}
                 goToPreviousSong={goToPreviousSong}
                 goToNextRandomSong={goToNextRandomSong}

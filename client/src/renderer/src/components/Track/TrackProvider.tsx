@@ -40,7 +40,7 @@ export default function TrackProvider({ index, song, updateCurrentTrack }: Props
         songId={index}
       />
       <Track.Title author={author} title={title} theTrackThatIsPlaying={theTrackThatIsPlaying} />
-      <Track.Like id={index + 1} />
+      <Track.Like id={index} />
     </Track.Root>
   )
 }

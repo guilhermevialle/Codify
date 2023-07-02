@@ -32,3 +32,14 @@ export async function getUniqueSong(id: number): Promise<Song | undefined> {
     return undefined
   }
 }
+
+export async function getLikedSongs(idsArray: number[]): Promise<Song[] | undefined> {
+  try {
+    const promises = idsArray.map((id) => api.get(`/song/${id}`))
+    const responses = await Promise.all(promises)
+    const data = responses.map((response) => response.data)
+    return data
+  } catch (error) {
+    return undefined
+  }
+}

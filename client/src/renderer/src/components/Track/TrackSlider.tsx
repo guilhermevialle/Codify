@@ -88,7 +88,7 @@ function TrackSlider({ time, playerFunctions }: Props) {
       ></div>
       <div
         ref={progressRef}
-        className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-300 via-violet-500 to-rose-400 rounded-3xl border-r-red-500 border-r-[7px] shadow-lg glow"
+        className="absolute top-0 left-0 h-full bg-gradient-to-r from-blue-300 via-violet-500 to-rose-400 rounded-3xl border-r-red-500 border-r-[4px] shadow-lg glow"
       ></div>
       {peaksArray.map((height, index) => {
         return (

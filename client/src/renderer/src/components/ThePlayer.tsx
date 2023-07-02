@@ -6,8 +6,9 @@ import SwitchIcon from './Lib/Icons/SwitchIcon'
 import { parseSong } from '@renderer/utils/parseSong'
 import { BsPause, BsPlayFill, BsSkipStartFill, BsSoundwave } from 'react-icons/bs'
 import TrackSlider from './Track/TrackSlider'
-import Liked from './Lib/Icons/Liked'
 import TrackLoop from './Lib/Icons/TrackLoop'
+import Liked from './Lib/Icons/Liked'
+import Slider from './Lib/Sliders/Slider/Slider'
 
 type Props = {
   goToNextSong: () => void
@@ -16,7 +17,7 @@ type Props = {
   source: string | undefined
 }
 
-function Player({ source, goToNextSong, goToPreviousSong, goToNextRandomSong }: Props) {
+function ThePlayer({ source, goToNextSong, goToPreviousSong, goToNextRandomSong }: Props) {
   if (!source) return null
 
   const [track, setTrack] = useAtom(trackAtom)
@@ -146,8 +147,23 @@ function Player({ source, goToNextSong, goToPreviousSong, goToNextRandomSong }: 
       </div>
       <div className="flex-auto">
         <div className="w-full h-full flex flex-col justify-center items-center">
-          <div className="w-full h-[70%]">
-            <TrackSlider
+          <div className="w-full h-[70%] flex items-center">
+            <Slider
+              sliderConfig={{
+                width: 400,
+                height: 40,
+                bgColor: ['#f0abfc', '#8b5cf0', '#4f46e5', '#f43f5e', '#60a5fa'],
+                value: track?.currentTime ?? 0,
+                totalValue: track?.duration ?? 100,
+                peakConfig: {
+                  width: 5,
+                  gap: 7
+                },
+                cursor: true,
+                updateValue: handleAdjustAudioCurrentTime
+              }}
+            />
+            {/* <TrackSlider
               playerFunctions={{
                 handleAdjustAudioCurrentTime
               }}
@@ -155,7 +171,7 @@ function Player({ source, goToNextSong, goToPreviousSong, goToNextRandomSong }: 
                 currentTime: track?.currentTime ?? 0,
                 duration: track?.duration ?? 0
               }}
-            />
+            /> */}
           </div>
           <div className="w-full h-[30%] flex justify-between items-end px-2">
             <span className="text-sm font-medium">
@@ -178,4 +194,4 @@ function Player({ source, goToNextSong, goToPreviousSong, goToNextRandomSong }: 
   )
 }
 
-export default memo(Player)
+export default memo(ThePlayer)
