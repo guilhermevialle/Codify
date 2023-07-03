@@ -1,6 +1,6 @@
 import Background from '@renderer/components/Background'
 import Padding from '@renderer/components/Ident/Padding'
-import ThePlayer from '@renderer/components/ThePlayer'
+import ThePlayer from '@renderer/components/Player/Player'
 import { baseURL, getLocalSongs } from '@renderer/services/api'
 import { useState } from 'react'
 import { MdHomeFilled, MdMusicNote } from 'react-icons/md'

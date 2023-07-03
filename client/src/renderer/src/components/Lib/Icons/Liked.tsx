@@ -20,7 +20,7 @@ export default function Liked({ id }: Props) {
   return (
     <button onClick={handleLikeSong}>
       {isLiked(id) ? (
-        <i className="text-yellow-400">
+        <i className="text-yellow-400 star-glow">
           <BsStarFill className="svg-shadow" size={14} />
         </i>
       ) : (
