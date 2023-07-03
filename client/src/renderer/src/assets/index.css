@@ -88,7 +88,7 @@
 }
 
 .loop-glow {
-  filter: drop-shadow(0 0 4px rgba(251, 28, 206, 0.378));
+  filter: drop-shadow(0 0 4px rgba(251, 28, 206, 0.498));
 }
 
 .peak-glow {

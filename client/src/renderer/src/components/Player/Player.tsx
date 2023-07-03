@@ -6,20 +6,28 @@ import PlayerTitle from './PlayerTitle'
 import PlayerControls from './PlayerControls'
 import PlayerLoopControls from './PlayerLoopControls'
 import PlayerTime from './PlayerTime'
+import { getId } from '@renderer/utils/getId'
 
 type PlayerProps = {
-  goToNextSong: () => void
-  goToPreviousSong: () => void
-  goToNextRandomSong: () => void
+  controls: {
+    goToNextSong: () => void
+    goToPreviousSong: () => void
+    goToNextRandomSong: () => void
+    updateCurrentTrack: (id: number) => void
+  }
   source: string | undefined
+  playlistLength: number | undefined
 }
 
-function Player({ source, goToNextSong, goToPreviousSong, goToNextRandomSong }: PlayerProps) {
+function Player({ source, controls, playlistLength }: PlayerProps) {
   if (!source) return null
+
+  const { goToNextSong, goToPreviousSong, goToNextRandomSong, updateCurrentTrack } = controls
 
   const [track, setTrack] = useAtom(trackAtom)
   const audioRef = useRef<HTMLAudioElement>(null)
   const timeAdjustmentSliderRef = useRef<HTMLInputElement>(null)
+  const id = getId(source)
 
   function playAudio() {
     if (audioRef.current) {
@@ -43,6 +51,9 @@ function Player({ source, goToNextSong, goToPreviousSong, goToNextRandomSong }: 
   }
 
   function handleAudioEnded() {
+    if (!track?.isRandomized && !track?.isLooping && Number(id) == playlistLength! - 1)
+      return updateCurrentTrack(0)
+
     if (track?.isRandomized) return goToNextRandomSong()
     if (!track?.isLooping) return goToNextSong()
 

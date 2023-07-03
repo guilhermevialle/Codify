@@ -1,6 +1,6 @@
 import Background from '@renderer/components/Background'
 import Padding from '@renderer/components/Ident/Padding'
-import ThePlayer from '@renderer/components/Player/Player'
+import Player from '@renderer/components/Player/Player'
 import { baseURL, getLocalSongs } from '@renderer/services/api'
 import { useState } from 'react'
 import { MdHomeFilled, MdMusicNote } from 'react-icons/md'
@@ -9,6 +9,7 @@ import { useQuery } from 'react-query'
 import { getRandomInt } from '@renderer/utils/getRandomInt'
 import { Track } from '@renderer/components/Track'
 import { Link } from 'react-router-dom'
+import { getId } from '@renderer/utils/getId'
 
 export default function Main() {
   const [currentTrackSource, setCurrentTrackSource] = useState<string | undefined>(undefined)
@@ -27,7 +28,7 @@ export default function Main() {
   }
 
   function goToNextSong() {
-    const id = currentTrackSource?.split('/').pop()
+    const id = getId(currentTrackSource)
     if (localSongs && id === String(localSongs?.length - 1)) return
 
     setCurrentTrackSource((prev) => {
@@ -40,7 +41,7 @@ export default function Main() {
   }
 
   function goToPreviousSong() {
-    const id = currentTrackSource?.split('/').pop()
+    const id = getId(currentTrackSource)
     if (id === '0') return
 
     setCurrentTrackSource((prev) => {
@@ -125,11 +126,15 @@ export default function Main() {
         <div className="w-full h-[20%] bg-zinc-800 bg-opacity-20">
           <div className="w-full h-full bg-dpurple-900 bg-opacity-30 backdrop-blur-sm drop-shadow-lg rounded-t-[40px]">
             <Padding>
-              <ThePlayer
-                goToNextSong={goToNextSong}
-                goToPreviousSong={goToPreviousSong}
-                goToNextRandomSong={goToNextRandomSong}
+              <Player
+                controls={{
+                  goToNextSong,
+                  goToPreviousSong,
+                  goToNextRandomSong,
+                  updateCurrentTrack
+                }}
                 source={currentTrackSource}
+                playlistLength={localSongs?.length}
               />
             </Padding>
           </div>
