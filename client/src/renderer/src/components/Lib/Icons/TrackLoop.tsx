@@ -34,7 +34,10 @@ export default function TrackLoop({}: TrackLoopProps) {
   }, [currentLoopMethod])
 
   return (
-    <button onClick={handleSwitchTrack} className="loop-glow text-pink-500 svg-shadow">
+    <button
+      onClick={handleSwitchTrack}
+      className="loop-glow text-pink-500 svg-shadow hover:scale-[1.1] transition-all"
+    >
       {currentLoopMethod == 'random' ? (
         <TbSwitch3 size={16} />
       ) : currentLoopMethod == 'repeatOne' ? (

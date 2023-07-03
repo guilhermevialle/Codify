@@ -1,17 +1,19 @@
+import { useState } from 'react'
+import { useQuery } from 'react-query'
+
 import Background from '@renderer/components/Background'
 import Padding from '@renderer/components/Ident/Padding'
 import Player from '@renderer/components/Player/Player'
-import { baseURL, getLocalSongs } from '@renderer/services/api'
-import { useState } from 'react'
-import { MdHomeFilled, MdMusicNote } from 'react-icons/md'
-import { IoMdHeart } from 'react-icons/io'
-import { useQuery } from 'react-query'
-import { getRandomInt } from '@renderer/utils/getRandomInt'
-import { Track } from '@renderer/components/Track'
-import { Link } from 'react-router-dom'
-import { getId } from '@renderer/utils/getId'
 
-export default function Main() {
+import { getId } from '@renderer/utils/getId'
+import { baseURL, getLocalSongs } from '@renderer/services/api'
+import { getRandomInt } from '@renderer/utils/getRandomInt'
+
+import RootSidebar from './RootSidebar'
+import RootPlaylist from './RootPlaylist'
+import RootTopbar from './RootTopbar'
+
+export default function Root() {
   const [currentTrackSource, setCurrentTrackSource] = useState<string | undefined>(undefined)
 
   const {
@@ -71,55 +73,29 @@ export default function Main() {
     <>
       <Background />
       <main className="w-screen h-screen text-neutral-300 select-none relative z-20">
-        <div className="w-full h-[9%] bg-zinc-800 bg-opacity-20 backdrop-blur-sm drop-shadow-lg"></div>
+        <div className="w-full h-[9%] bg-zinc-800 bg-opacity-20 backdrop-blur-sm drop-shadow-lg">
+          <Padding>
+            <RootTopbar />
+          </Padding>
+        </div>
         <div className="w-full h-[71%] flex bg-zinc-800 bg-opacity-20 backdrop-blur-sm drop-shadow-lg">
           <div className="w-[15%] h-full border-r-[1px] border-r-zinc-900 border-opacity-60">
             <Padding>
-              <div className="space-y-8 flex flex-col items-center">
-                <button className="text-white ">
-                  <MdHomeFilled size={23} className="candle" />
-                </button>
-                <button className="text-woodsmoke-600">
-                  <MdMusicNote
-                    className="svg-shadow hover:text-neutral-200 transition-all ease-in-out duration-[400]"
-                    size={23}
-                  />
-                </button>
-                <Link to={'/liked'}>
-                  <button className="text-woodsmoke-600">
-                    <IoMdHeart
-                      className="svg-shadow hover:text-neutral-200 transition-all ease-in-out duration-[400]"
-                      size={23}
-                    />
-                  </button>
-                </Link>
-              </div>
+              <RootSidebar />
             </Padding>
           </div>
           <div className="w-[85%] h-full">
             <Padding>
-              {isLoading ? (
-                <h1>Loading</h1>
-              ) : isError ? (
-                <h1>Try again</h1>
-              ) : (
-                <div className="w-full h-full">
-                  <div className="w-full h-[10%] flex justify-end">
-                    <Padding>
-                      <div className="flex justify-end"></div>
-                    </Padding>
-                  </div>
-                  <div className="w-full h-[90%] py-2 overflow-y-auto">
-                    {localSongs?.map((song, index) => (
-                      <Track.Provider
-                        updateCurrentTrack={updateCurrentTrack}
-                        index={index}
-                        song={song}
-                      />
-                    ))}
-                  </div>
-                </div>
-              )}
+              <RootPlaylist
+                controls={{
+                  updateCurrentTrack
+                }}
+                events={{
+                  isError,
+                  isLoading
+                }}
+                playlist={localSongs}
+              />
             </Padding>
           </div>
         </div>

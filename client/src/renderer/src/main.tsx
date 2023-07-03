@@ -1,7 +1,7 @@
 import { createRoot } from 'react-dom/client'
 import { createHashRouter, RouterProvider } from 'react-router-dom'
 import './assets/index.css'
-import Root from './pages/Root'
+import Root from './pages/Root/Root'
 import { QueryClientProvider, QueryClient } from 'react-query'
 
 const router = createHashRouter([
