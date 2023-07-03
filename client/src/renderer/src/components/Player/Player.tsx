@@ -43,6 +43,7 @@ function Player({ source, goToNextSong, goToPreviousSong, goToNextRandomSong }: 
   }
 
   function handleAudioEnded() {
+    if (track?.isRandomized) return goToNextRandomSong()
     if (!track?.isLooping) return goToNextSong()
 
     const isEnded = true

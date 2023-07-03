@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react'
+import { useMemo } from 'react'
 import { PeakT } from './types'
 import { getRandomInt } from './utils'
 
