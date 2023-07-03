@@ -1,10 +1,10 @@
 import Liked from '../Lib/Icons/Liked'
 
-type Props = {
+type TrackLikeProps = {
   id: number | undefined
 }
 
-export default function TrackLike({ id }: Props) {
+export default function TrackLike({ id }: TrackLikeProps) {
   if (Number.isNaN(id) || id == undefined) return null
 
   return (

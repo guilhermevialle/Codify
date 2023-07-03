@@ -7,14 +7,14 @@ import PlayerControls from './PlayerControls'
 import PlayerLoopControls from './PlayerLoopControls'
 import PlayerTime from './PlayerTime'
 
-type Props = {
+type PlayerProps = {
   goToNextSong: () => void
   goToPreviousSong: () => void
   goToNextRandomSong: () => void
   source: string | undefined
 }
 
-function Player({ source, goToNextSong, goToPreviousSong, goToNextRandomSong }: Props) {
+function Player({ source, goToNextSong, goToPreviousSong, goToNextRandomSong }: PlayerProps) {
   if (!source) return null
 
   const [track, setTrack] = useAtom(trackAtom)

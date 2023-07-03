@@ -4,6 +4,8 @@ export function getElementDimensions(element: HTMLElement | null) {
     const height = element.clientHeight
     return { width, height }
   }
+
+  return undefined
 }
 
 type RGB = [number, number, number]

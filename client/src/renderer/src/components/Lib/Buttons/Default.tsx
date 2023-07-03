@@ -1,4 +1,4 @@
-type Props = {
+type DefaultButtonProps = {
   text: string
   icon?: {
     asset: React.ReactNode
@@ -6,7 +6,7 @@ type Props = {
   }
 }
 
-export default function DefaultButton({ text, icon }: Props) {
+export default function DefaultButton({ text, icon }: DefaultButtonProps) {
   return (
     <button
       type="button"

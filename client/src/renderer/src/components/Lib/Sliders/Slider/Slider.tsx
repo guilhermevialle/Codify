@@ -55,6 +55,7 @@ export default function Slider({ sliderConfig }: SliderProps) {
       onMouseDown={() => setIsMousePressing(true)}
       onMouseUp={() => setIsMousePressing(false)}
       onMouseMove={(e) => getMousePosition(e, sliderRef.current)}
+      onMouseLeave={() => setIsMousePressing(false)}
       ref={sliderRef}
       style={{
         width: `${width}px`,

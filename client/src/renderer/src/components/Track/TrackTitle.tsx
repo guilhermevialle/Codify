@@ -1,10 +1,10 @@
-type Props = {
+type TrackTitleProps = {
   theTrackThatIsPlaying: boolean
   title: string
   author: string
 }
 
-export default function TrackTitle({ theTrackThatIsPlaying, title, author }: Props) {
+export default function TrackTitle({ theTrackThatIsPlaying, title, author }: TrackTitleProps) {
   return (
     <div
       className={`w-[70%] font-medium ${

@@ -3,7 +3,7 @@ import { useState, useEffect, useRef } from 'react'
 import { BiChevronDown } from 'react-icons/bi'
 import { v4 as uuid } from 'uuid'
 
-type Props = {
+type DropdownProps = {
   buttonSize?: string
   buttonTitle: string | React.ReactNode
   sectionTitle: string
@@ -17,7 +17,7 @@ export default function Dropdown({
   buttonSize,
   sectionSize,
   options
-}: Props) {
+}: DropdownProps) {
   const [isSectionOpened, setDropdownSection] = useState<boolean>(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 

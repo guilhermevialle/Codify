@@ -1,11 +1,11 @@
 import useLiked from '@renderer/hooks/useLiked'
 import { BsStar, BsStarFill } from 'react-icons/bs'
 
-type Props = {
+type LikedButtonProps = {
   id: number | undefined
 }
 
-export default function Liked({ id }: Props) {
+export default function Liked({ id }: LikedButtonProps) {
   if (Number.isNaN(id) || id == undefined) return null
 
   const { addLikedItem, isLiked, removeLikedItem } = useLiked()

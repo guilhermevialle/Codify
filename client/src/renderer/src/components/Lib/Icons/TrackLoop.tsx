@@ -4,9 +4,9 @@ import { TbSwitch3 } from 'react-icons/tb'
 import { trackAtom } from '@renderer/contexts/trackAtom'
 import { useAtom } from 'jotai'
 
-type Props = {}
+type TrackLoopProps = {}
 
-export default function TrackLoop({}: Props) {
+export default function TrackLoop({}: TrackLoopProps) {
   const [, setTrack] = useAtom(trackAtom)
   const trackLoopMethods = ['random', 'repeatOne', 'repeatAll']
   const [index, setIndex] = useState<number>(1)
@@ -22,17 +22,19 @@ export default function TrackLoop({}: Props) {
       setTrack((prev) => {
         return { ...prev, isLooping: true }
       })
-    }
-
-    if (currentLoopMethod == 'random') {
+    } else if (currentLoopMethod == 'random') {
       setTrack((prev) => {
         return { ...prev, isLooping: false, isRandomized: true }
+      })
+    } else {
+      setTrack((prev) => {
+        return { ...prev, isLooping: false, isRandomized: false }
       })
     }
   }, [currentLoopMethod])
 
   return (
-    <button onClick={handleSwitchTrack}>
+    <button onClick={handleSwitchTrack} className="loop-glow text-pink-500 svg-shadow">
       {currentLoopMethod == 'random' ? (
         <TbSwitch3 size={16} />
       ) : currentLoopMethod == 'repeatOne' ? (

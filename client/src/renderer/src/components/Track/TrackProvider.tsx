@@ -6,13 +6,13 @@ import { baseURL } from '@renderer/services/api'
 import { useState, useEffect } from 'react'
 import { parseSong } from '@renderer/utils/parseSong'
 
-type Props = {
+type TrackProviderProps = {
   index: number
   song: Song
   updateCurrentTrack: (id: number) => void
 }
 
-export default function TrackProvider({ index, song, updateCurrentTrack }: Props) {
+export default function TrackProvider({ index, song, updateCurrentTrack }: TrackProviderProps) {
   if (!song) return null
 
   const [track, setTrack] = useAtom(trackAtom)
