@@ -20,7 +20,7 @@ export default function PlayerTime({ time, changeValue }: PlayerTimeProps) {
             sliderConfig={{
               width: 400,
               height: 40,
-              bgColor: ['#f0abfc', '#8b5cf0', '#4f46e5', '#f43f5e', '#60a5fa'],
+              bgColor: ['#ec4899', '#8b5cf0', '#4f46e5', '#f43f5e', '#60a5fa'],
               value: current ?? 0,
               totalValue: duration ?? 100,
               peakConfig: {

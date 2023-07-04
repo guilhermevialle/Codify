@@ -84,7 +84,7 @@
 } 
 
 .star-glow {
-  filter: drop-shadow(0 0 4px rgba(251, 203, 28, 0.378));
+  filter: drop-shadow(0 0 4px rgba(251, 154, 28, 0.378));
 }
 
 .loop-glow {

@@ -1,5 +1,5 @@
 import { IoMdHeart } from 'react-icons/io'
-import { MdHomeFilled, MdMusicNote } from 'react-icons/md'
+import { MdHomeFilled, MdMusicNote, MdSettings } from 'react-icons/md'
 import { Link } from 'react-router-dom'
 
 export default function RootSidebar() {
@@ -22,6 +22,12 @@ export default function RootSidebar() {
           />
         </button>
       </Link>
+      <button className="text-woodsmoke-600">
+        <MdSettings
+          className="svg-shadow hover:text-neutral-200 transition-all ease-in-out duration-[400]"
+          size={23}
+        />
+      </button>
     </div>
   )
 }
