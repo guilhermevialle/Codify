@@ -1,20 +1,22 @@
 import { app, shell, BrowserWindow } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import icon from '../../resources/icon.png?asset'
+import icon from '../../resources/codify_logo_png.png?asset'
 
 function createWindow(): void {
   const mainWindow = new BrowserWindow({
+    titleBarOverlay: true,
     width: 970,
     height: 600,
     resizable: false,
     show: false,
     title: 'Codify',
+    movable: true,
+    fullscreenable: false,
     autoHideMenuBar: true,
-    ...(process.platform === 'linux' ? { icon } : {}),
+    ...(process.platform === 'linux' ? { icon } : { icon }),
     webPreferences: {
       webSecurity: false,
-      disableHtmlFullscreenWindowResize: true,
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false,
       nodeIntegration: true,

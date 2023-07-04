@@ -34,7 +34,12 @@ export default function RootPlaylist({ controls, events, playlist }: RootPlaylis
           </div>
           <div className="w-full h-[90%] py-2 overflow-y-auto">
             {playlist?.map((song, index) => (
-              <Track.Provider updateCurrentTrack={updateCurrentTrack} index={index} song={song} />
+              <Track.Provider
+                key={index + song.title}
+                updateCurrentTrack={updateCurrentTrack}
+                index={index}
+                song={song}
+              />
             ))}
           </div>
         </div>
