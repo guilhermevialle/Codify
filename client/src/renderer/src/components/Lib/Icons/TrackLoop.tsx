@@ -1,8 +1,8 @@
+import { trackAtom } from '@renderer/contexts/trackAtom'
+import { useAtom } from 'jotai'
 import { useEffect, useState } from 'react'
 import { BsRepeat, BsRepeat1 } from 'react-icons/bs'
 import { TbSwitch3 } from 'react-icons/tb'
-import { trackAtom } from '@renderer/contexts/trackAtom'
-import { useAtom } from 'jotai'
 
 type TrackLoopProps = {}
 

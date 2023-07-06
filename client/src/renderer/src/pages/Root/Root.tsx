@@ -5,12 +5,12 @@ import Background from '@renderer/components/Background'
 import Padding from '@renderer/components/Ident/Padding'
 import Player from '@renderer/components/Player/Player'
 
-import { getId } from '@renderer/utils/getId'
 import { baseURL, getLocalSongs } from '@renderer/services/api'
+import { getId } from '@renderer/utils/getId'
 import { getRandomInt } from '@renderer/utils/getRandomInt'
 
-import RootSidebar from './RootSidebar'
 import RootPlaylist from './RootPlaylist'
+import RootSidebar from './RootSidebar'
 import RootTopbar from './RootTopbar'
 
 export default function Root() {

@@ -1,14 +1,14 @@
-import { useRef, memo } from 'react'
 import { useAtom } from 'jotai/react'
+import { memo, useRef } from 'react'
 
-import { parseSong } from '@renderer/utils/parseSong'
-import { getId } from '@renderer/utils/getId'
 import { trackAtom } from '@renderer/contexts/trackAtom'
+import { getId } from '@renderer/utils/getId'
+import { parseSong } from '@renderer/utils/parseSong'
 
-import PlayerTitle from './PlayerTitle'
 import PlayerControls from './PlayerControls'
 import PlayerLoopControls from './PlayerLoopControls'
 import PlayerTime from './PlayerTime'
+import PlayerTitle from './PlayerTitle'
 
 type PlayerProps = {
   controls: {

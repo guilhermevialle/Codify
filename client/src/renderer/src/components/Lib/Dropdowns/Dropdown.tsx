@@ -1,5 +1,5 @@
 import { DropdownOption } from '@renderer/types'
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { BiChevronDown } from 'react-icons/bi'
 import { v4 as uuid } from 'uuid'
 

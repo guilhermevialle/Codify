@@ -1,10 +1,10 @@
-import { Song } from '@renderer/types'
-import { Track } from '.'
 import { trackAtom } from '@renderer/contexts/trackAtom'
-import { useAtom } from 'jotai'
 import { baseURL } from '@renderer/services/api'
-import { useState, useEffect } from 'react'
+import { Song } from '@renderer/types'
 import { parseSong } from '@renderer/utils/parseSong'
+import { useAtom } from 'jotai'
+import { useEffect, useState } from 'react'
+import { Track } from '.'
 
 type TrackProviderProps = {
   index: number
